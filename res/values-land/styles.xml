@@ -1,0 +1,23 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Text styles
+    -->
+	<style name="Text_activity_login_unofficial" parent="@android:style/TextAppearance.Large">
+	    <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+	    <item name="android:textColor">@color/text_activity_login_unofficial</item>
+	    <item name="android:textStyle">normal</item>
+	    <item name="android:textSize">40sp</item>
+    </style>
+    
+    <!--
+        Button styles
+    -->
+	<style name="Button_Login" parent="@style/Button.Base">
+	    <item name="android:textSize">24sp</item>
+	    <item name="android:paddingRight">75dp</item>
+	    <item name="android:paddingLeft">75dp</item>
+	</style>
+	
+    
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pressed_actionbar">#3da8d1</color>
+    <color name="background_actionbar">#888</color>
+    
+    <color name="title_section">#2d80aa</color>
+    <color name="name_item">#a5a39e</color>
+    <color name="number_items">#c4c4c4</color>
+    
+    <color name="progress_bar_completed">#f28a56</color>
+    <color name="progress_bar_uncompleted">#eae8e1</color>
+    
+    <color name="background_screen">#eae8e1</color>
+    <color name="background_flyout_menu">#333</color>
+    <color name="background_flyout_menu_item_activated">#3da8d1</color>
+    <color name="text_flyout_menu_item">#fff</color>
+    <color name="text_flyout_menu_item_selected">#fff</color>
+    
+    <color name="text_activity_login_unofficial">#3cb7c4</color>
+    
+</resources>

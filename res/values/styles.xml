@@ -1,0 +1,98 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="actionBarItemBackground">@drawable/selectable_background_actionbar</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Actionbar</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Actionbar</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Actionbar</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Actionbar</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Actionbar</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_actionbar</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_actionbar</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Actionbar</item>
+    </style>
+    
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <!-- <item name="android:activatedBackgroundIndicator">@drawable/activated_background_indicator</item> -->
+        
+    </style>
+
+    <!--
+        ActionBar Theme
+    -->
+    <style name="ActionBar.Solid.Actionbar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_actionbar</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_actionbar</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_actionbar</item>
+        <item name="progressBarStyle">@style/ProgressBar.Actionbar</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Actionbar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@drawable/ab_transparent_actionbar</item>
+        <item name="progressBarStyle">@style/ProgressBar.Actionbar</item>
+    </style>
+	
+    <style name="PopupMenu.Actionbar" parent="@style/Widget.AppCompat.Light.PopupMenu">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_actionbar</item>	
+    </style>
+	
+    <style name="DropDownListView.Actionbar" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_actionbar</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Actionbar" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_actionbar</item>
+    </style>
+	
+    <style name="DropDownNav.Actionbar" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_actionbar</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_actionbar</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_actionbar</item>
+    </style>
+    
+    <style name="ProgressBar.Actionbar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_actionbar</item>
+    </style>
+    
+    <style name="ActionButton.CloseMode.Actionbar" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_actionbar</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Actionbar.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Actionbar</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Actionbar</item>
+    </style>
+    
+    
+    <!--
+        Text styles
+    -->
+	<style name="Text_activity_login_unofficial" parent="@android:style/TextAppearance.Large">
+	    <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+	    <item name="android:textColor">@color/text_activity_login_unofficial</item>
+	    <item name="android:textStyle">normal</item>
+	    <item name="android:textSize">24sp</item>
+    </style>
+    
+    <!--
+        Button styles
+    -->
+    <style name="Button.Base" parent="@android:style/Widget.Holo.Light.Button">
+	</style>
+    
+    
+	<style name="Button_Login" parent="@style/Button.Base">
+	    <item name="android:textSize">24sp</item>
+	    <item name="android:paddingRight">50dp</item>
+	    <item name="android:paddingLeft">50dp</item>
+	</style>
+	
+    
+</resources>

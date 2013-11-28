@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".LoginActivity" >
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/activity_login_button_login" 
+        style="@style/Button_Login"/>
+
+    <ImageView
+        android:id="@+id/imageViewLogoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="38dp"
+        android:src="@drawable/logo_teambox_image_big" />
+
+    <ImageView
+        android:id="@+id/imageViewLogoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageViewLogoImage"
+        android:layout_toRightOf="@+id/imageViewLogoImage"
+        android:layout_marginLeft="12dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/logo_teambox_text_big" 
+/>
+
+    <TextView
+        android:id="@+id/textViewUnofficial"
+        style="@style/Text_activity_login_unofficial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imageViewLogoImage"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/imageViewLogoText"
+        
+        
+        android:layout_marginLeft="24dp"
+        android:gravity="bottom"
+        android:text="@string/activity_login_textview_unofficial" />
+    
+</RelativeLayout>
