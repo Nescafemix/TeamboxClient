@@ -61,10 +61,6 @@ public class LoginActivity extends FragmentActivity {
 		});
 	}
 
-	private void loadSessionScreen() {
-		finish();
-		startActivity(new Intent(this,MainActivity.class));
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,54 +68,60 @@ public class LoginActivity extends FragmentActivity {
 		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
 	
+	private void loadSessionScreen() {
+		finish();
+		startActivity(new Intent(this,MainActivity.class));
+	}
+
 	 
-	 private class LoginManager extends AsyncTask<Void, Void, LoginResult> {
-		 protected LoginResult doInBackground(Void... urls) {
-			 LoginResult result = new LoginResult();
-			 OAuth oauth = OAuthTeamBox.newInstance(getApplicationContext(), getSupportFragmentManager());
-			 try {
-				 Credential credential = oauth.authorizeExplicitly("userId", null, null).getResult();
-				 result.token = credential.getAccessToken();
-				 result.succesfully = Boolean.TRUE;
-			 } catch (CancellationException e) {
-				 // TODO Auto-generated catch block
-				 e.printStackTrace();
-			 } catch (IOException e) {
-				 // TODO Auto-generated catch block
-				 e.printStackTrace();
-			 }
+	private class LoginManager extends AsyncTask<Void, Void, LoginResult> {
+		protected LoginResult doInBackground(Void... urls) {
+			LoginResult result = new LoginResult();
+			OAuth oauth = OAuthTeamBox.newInstance(getApplicationContext(), getSupportFragmentManager());
+			try {
+				Credential credential = oauth.authorizeExplicitly("userId", null, null).getResult();
+				result.token = credential.getAccessToken();
+				result.succesfully = Boolean.TRUE;
+			} catch (CancellationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    	 
-	    	 return result;
-	     }
+			return result;
+		}
 	     
-	     protected void onPostExecute(LoginResult result) {
-	    	 if(result.succesfully)
-	    	 {
-		        SharedPreferences sharedPreferences = getSharedPreferences(Application.APP_STORE_PREF_FILE, Application.MODE_PRIVATE);
+	    protected void onPostExecute(LoginResult result) {
+	    	if(result.succesfully)
+	    	{
+	    		SharedPreferences sharedPreferences = getSharedPreferences(Application.APP_STORE_PREF_FILE, Application.MODE_PRIVATE);
 				SharedPreferences.Editor editor = sharedPreferences.edit();
 				
 				editor.putString(Application.TOKEN_PREF_KEY, result.token);
 				editor.commit();
 				
 				loadSessionScreen();
-	    	 }else
-	    	 {
-	    		 Utilities.deleteCookies(getApplicationContext());
-	    	 }
-	     }
-	 }	
+	    	}else
+	    	{
+	    		Utilities.deleteCookies(getApplicationContext());
+	    	}
+	    }
+	}	
 
-     private class LoginResult {
- 		public String token;
+    private class LoginResult {
+    	public String token;
  		public boolean succesfully = Boolean.FALSE;
- }
+    }
 
 	 
-	 private boolean isUserLogged(){
-		 SharedPreferences sharedPreferences = getSharedPreferences(Application.APP_STORE_PREF_FILE, Application.MODE_PRIVATE);
+    private boolean isUserLogged(){
+    	SharedPreferences sharedPreferences = getSharedPreferences(Application.APP_STORE_PREF_FILE, Application.MODE_PRIVATE);
 		 
-		 return sharedPreferences.contains(Application.TOKEN_PREF_KEY);
-	 }
+    	return sharedPreferences.contains(Application.TOKEN_PREF_KEY);
+    }
 
 }
