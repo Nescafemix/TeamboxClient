@@ -71,7 +71,7 @@ public class UpdateTeamBoxDataManager {
 				account.micro_avatar_url);
 	    accountRow.save();
 		
-		Log.v("TeamBoxClient", "Account from " + account.first_name + " " + account.last_name + " updated in BBDD (it's not true)");
+		Log.v("TeamBoxClient", "Account from " + account.first_name + " " + account.last_name + " updated in DB");
 	    
 		return false;
 		
@@ -102,7 +102,7 @@ public class UpdateTeamBoxDataManager {
 			projectRow.save();
 		}
 	    
-		Log.v("TeamBoxClient", "Projects updated in BBDD (it's not true). First: " + projects.get(0).name + ". Last: " + projects.get(projects.size()-1).name);
+		Log.v("TeamBoxClient", "Projects updated in DB. First: " + projects.get(0).name + ". Last: " + projects.get(projects.size()-1).name);
 
 	    return false;
 	}
@@ -140,7 +140,7 @@ public class UpdateTeamBoxDataManager {
 			taskRow.save();
 		}
 	    
-		Log.v("TeamBoxClient", "Tasks updated in BBDD (it's not true). First: " + tasks.get(0).name + ". Last: " + tasks.get(tasks.size()-1).name);
+		Log.v("TeamBoxClient", "Tasks updated in DB. First: " + tasks.get(0).name + ". Last: " + tasks.get(tasks.size()-1).name);
 
 	    return false;
 	}

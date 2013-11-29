@@ -27,8 +27,8 @@ public class ServiceInfo {
 	public static final String TOKEN_REQUEST_URL="https://teambox.com/oauth/token";
 	public static final String AUTHORIZATION_REQUEST_URL="https://teambox.com/oauth/authorize";
 
-	public static final String REDIRECT_URL="http://www.littlecatsbox.com/auth";
-	public static final List<String> SCOPES= Arrays.asList("read_projects", "write_projects", "offline_access");
+	public static final String REDIRECT_URL="http://www.teamboxunofficial.com/auth";
+	public static final List<String> SCOPES= Arrays.asList("read_projects", "write_projects");
 
 	public static final String API_URL = "https://www.teambox.com/api/2";
 }
