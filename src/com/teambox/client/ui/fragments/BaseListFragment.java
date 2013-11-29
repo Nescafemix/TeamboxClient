@@ -13,34 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.teambox.client.ui.fragments;
 
-package com.teambox.client.api;
+import android.support.v4.app.ListFragment;
 
-import java.util.List;
+/**
+ * @author Joan Fuentes
+ *
+ */
+public abstract class BaseListFragment extends ListFragment{
+    protected static final String ARG_SECTION_NUMBER = "section_number";
 
-import retrofit.http.GET;
-import retrofit.http.Query;
-
-
-public interface TeamBoxInterface {
-
-	
-	@GET("/account")
-	Account account(
-			@Query("access_token") String token
-			);
-
-	@GET("/projects")
-	List<Project> projects(
-			@Query("access_token") String token
-			);
-
-	@GET("/tasks")
-	List<Task> tasks(
-			@Query("access_token") String token,
-			@Query("scope") String scope,
-			@Query("count") String count // Count 0 means all matched 
-			);
-
-
+	public abstract void loadDataInViews();
 }

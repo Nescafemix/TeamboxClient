@@ -70,6 +70,16 @@
         <item name="dropDownListViewStyle">@style/DropDownListView.Actionbar</item>
     </style>
     
+
+    <!--
+        Layoput styles
+    -->
+    
+    <style name="Layout_task_list_item">
+	    <item name="android:background">@drawable/activated_background_indicator_task_list_item</item>
+	    <item name="android:padding">10dp</item>
+    </style>
+    
     
     <!--
         Text styles
@@ -80,7 +90,25 @@
 	    <item name="android:textStyle">normal</item>
 	    <item name="android:textSize">24sp</item>
     </style>
-    
+
+	<style name="Text_fragment_task_list_name" parent="@android:style/TextAppearance.Large">
+	    <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+	    <item name="android:textColor">@color/text_fragment_task_list_primary</item>
+	    <item name="android:textSize">14sp</item>
+	    <item name="android:textStyle">normal</item>
+    </style>
+
+	<style name="Text_fragment_task_list_comments_count" parent="@android:style/TextAppearance.Small">
+	    <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+	    <item name="android:textColor">@color/text_fragment_task_list_primary</item>
+	    <item name="android:textSize">10sp</item>
+	    <item name="android:textStyle">normal</item>
+    </style>
+	
+	<style name="Text_fragment_task_list_comments_count_title" parent="@style/Text_fragment_task_list_comments_count">
+		<item name="android:layout_marginLeft">5dp</item>
+	</style>
+			
     <!--
         Button styles
     -->

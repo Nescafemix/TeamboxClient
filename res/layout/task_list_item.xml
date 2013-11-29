@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Layout_task_list_item">
+
+    <TextView
+        android:id="@+id/textViewTaskCommentsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewTaskName"
+        android:layout_toLeftOf="@+id/textViewTaskCommentsCountTitle"
+        android:text="@null"
+		style="@style/Text_fragment_task_list_comments_count"/>
+    
+   	<TextView
+        android:id="@+id/textViewTaskCommentsCountTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewTaskName"
+        android:layout_alignRight="@+id/textViewTaskName"
+        android:text="@null"
+ 		style="@style/Text_fragment_task_list_comments_count_title"/>
+    
+    <TextView
+        android:id="@+id/textViewTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:lines="2"
+        android:text="@null"
+		style="@style/Text_fragment_task_list_name"/>
+
+</RelativeLayout>

@@ -16,5 +16,9 @@
     
     <string name="activity_login_button_login">LOGIN</string>
     <string name="activity_login_textview_unofficial">the unofficial App</string>
+
+    <string name="fragment_task_list_textview_task_list_comments_count_title_singular">comment</string>
+    <string name="fragment_task_list_textview_task_list_comments_count_title_plural">comments</string>
+    
     
 </resources>

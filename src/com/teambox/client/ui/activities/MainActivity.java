@@ -19,6 +19,9 @@ package com.teambox.client.ui.activities;
 import com.teambox.client.R;
 import com.teambox.client.Utilities;
 import com.teambox.client.services.UpdateDataIntentService;
+import com.teambox.client.ui.fragments.BaseListFragment;
+import com.teambox.client.ui.fragments.ProjectsListFragment;
+import com.teambox.client.ui.fragments.TasksListFragment;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -48,9 +51,8 @@ import android.widget.ListView;
 public class MainActivity extends ActionBarActivity {
 
     public static final String ARG_SECTION_NUMBER = "section_number";
-    public static final int FRAGMENT_DASHBOARD = 0;
-    public static final int FRAGMENT_PROJECTS = 1;
-    public static final int FRAGMENT_TASKS = 2;
+    public static final int FRAGMENT_PROJECTS = 0;
+    public static final int FRAGMENT_TASKS = 1;
     public static final int FRAGMENT_ABOUT_US = 7;
 	
     private DrawerLayout mDrawerLayout;
@@ -170,8 +172,7 @@ public class MainActivity extends ActionBarActivity {
         switch(item.getItemId()) {
         case R.id.action_refresh:
 
-        	updateStatusInActivity(UpdateDataIntentService.STATUS_DOWNLOADING);
-        	startService(new Intent(this,UpdateDataIntentService.class));
+        	updateProcess();
         	
             return true;
         case R.id.action_logout:
@@ -199,6 +200,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+	private void updateProcess() {
+		updateStatusInActivity(UpdateDataIntentService.STATUS_DOWNLOADING);
+		startService(new Intent(this,UpdateDataIntentService.class));
+	}
+
+
 
 
     /* The click listener for ListView in the navigation drawer */
@@ -214,8 +221,11 @@ public class MainActivity extends ActionBarActivity {
     	Fragment fragment = null;
     	
     	switch (position) {
-		case FRAGMENT_DASHBOARD:
-	        //fragment = new ProjectsListFragment();			
+		case FRAGMENT_PROJECTS:
+	        fragment = new ProjectsListFragment();			
+			break;
+		case FRAGMENT_TASKS:
+	        fragment = new TasksListFragment();			
 			break;
 
 		default:
@@ -232,10 +242,15 @@ public class MainActivity extends ActionBarActivity {
 	        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     	}
         // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mFlyoutTitles[position]);
+        updateSelectedItemInDrawer(position);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
+
+
+	public void updateSelectedItemInDrawer(int position) {
+		mDrawerList.setItemChecked(position, true);
+        setTitle(mFlyoutTitles[position]);
+	}
 
     @Override
     public void setTitle(CharSequence title) {
@@ -274,6 +289,7 @@ public class MainActivity extends ActionBarActivity {
     	// Register Receiver to receive messages about .
     	LocalBroadcastManager.getInstance(this).registerReceiver(mUpdateReceiver,
     			new IntentFilter(UpdateDataIntentService.NOTIFICATION_UPDATE_STATUS));
+    	
     }
     
     
@@ -298,6 +314,7 @@ public class MainActivity extends ActionBarActivity {
 		case UpdateDataIntentService.STATUS_COMPLETED:
 			refreshMenuItem.setActionView(null);
 			Crouton.showText(this,"UPDATE COMPLETED",Style.INFO);
+			((BaseListFragment)getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
 			break;
 		default:
 			refreshMenuItem.setActionView(R.drawable.action_progressbar);

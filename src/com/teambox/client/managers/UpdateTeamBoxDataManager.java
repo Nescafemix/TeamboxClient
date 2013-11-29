@@ -20,20 +20,27 @@ import java.util.List;
 
 import retrofit.RestAdapter;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.teambox.client.api.Account;
 import com.teambox.client.api.Project;
 import com.teambox.client.api.ServiceInfo;
+import com.teambox.client.api.Task;
 import com.teambox.client.api.TeamBoxInterface;
+import com.teambox.client.db.AccountTable;
+import com.teambox.client.db.ProjectTable;
+import com.teambox.client.db.TaskTable;
 
 public class UpdateTeamBoxDataManager {
 
 	private RestAdapter mRestAdapter;
 	private TeamBoxInterface mTeambox;
 	private String mToken;
+	private Context mContext;
 	
-	public UpdateTeamBoxDataManager(String token){
+	public UpdateTeamBoxDataManager(Context context, String token){
+		mContext = context;
 		mToken = token;
 		
 		// Create a very simple REST adapter which points the Teambox API endpoint.
@@ -52,7 +59,18 @@ public class UpdateTeamBoxDataManager {
 		Account account = mTeambox.account(mToken);
 		
 	    // Update data in Database
-	    // TODO
+		AccountTable.deleteAll(AccountTable.class);
+		AccountTable accountRow = new AccountTable(
+				mContext,
+				account.id,
+				account.first_name,
+				account.last_name,
+				account.email,
+				account.username,
+				account.avatar_url,
+				account.micro_avatar_url);
+	    accountRow.save();
+		
 		Log.v("TeamBoxClient", "Account from " + account.first_name + " " + account.last_name + " updated in BBDD (it's not true)");
 	    
 		return false;
@@ -65,8 +83,64 @@ public class UpdateTeamBoxDataManager {
 	    List<Project> projects = mTeambox.projects(mToken);
 	    
 	    // Update data in Database
-	    // TODO
+	    ProjectTable.deleteAll(ProjectTable.class);
+	    for (int i = 0; i < projects.size(); i++) {
+			Project project = projects.get(i);
+			
+			ProjectTable projectRow = new ProjectTable(
+					mContext, 
+					project.type, 
+					project.created_at, 
+					project.updated_at,
+					project.id,
+					project.permalink,
+					project.organization_id,
+					project.archived,
+					project.name,
+					project.tracks_time,
+					project.publish_pages);
+			projectRow.save();
+		}
+	    
 		Log.v("TeamBoxClient", "Projects updated in BBDD (it's not true). First: " + projects.get(0).name + ". Last: " + projects.get(projects.size()-1).name);
+
+	    return false;
+	}
+	
+	public boolean updateTasks()
+	{
+	    // Fetch a list of the tasks of this user.
+	    List<Task> tasks = mTeambox.tasks(mToken,"all","0");
+	    
+	    // Update data in Database
+	    TaskTable.deleteAll(TaskTable.class);
+	    for (int i = 0; i < tasks.size(); i++) {
+			Task task = tasks.get(i);
+			
+			TaskTable taskRow = new TaskTable(
+					mContext,
+					task.type,
+					task.created_at,
+					task.updated_at,
+					task.id,
+					task.name,
+					task.task_list_id,
+					task.comments_count,
+					task.assigned_id,
+					task.status,
+					task.is_private,
+					task.project_id,
+					task.urgent,
+					task.hidden_comments_count,
+					task.user_id,
+					task.position,
+					task.last_activity_id,
+					task.deleted,
+					task.due_on);
+			taskRow.save();
+		}
+	    
+		Log.v("TeamBoxClient", "Tasks updated in BBDD (it's not true). First: " + tasks.get(0).name + ". Last: " + tasks.get(tasks.size()-1).name);
 
 	    return false;
 	}

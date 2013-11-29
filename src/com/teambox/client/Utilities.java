@@ -1,5 +1,8 @@
 package com.teambox.client;
 
+import com.teambox.client.db.AccountTable;
+import com.teambox.client.db.ProjectTable;
+import com.teambox.client.db.TaskTable;
 import com.teambox.client.oauth.OAuth;
 import com.teambox.client.oauth.OAuthTeamBox;
 
@@ -39,7 +42,9 @@ public class Utilities {
 		oAuth.deleteCredential("userId");
 		
 		//4) Delete BBDD
-		// TODO
+		AccountTable.deleteAll(AccountTable.class);
+		ProjectTable.deleteAll(ProjectTable.class);
+		TaskTable.deleteAll(TaskTable.class);
 	}
 
 

@@ -25,7 +25,6 @@ import com.teambox.client.managers.UpdateTeamBoxDataManager;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 public class UpdateDataIntentService extends IntentService{
 
@@ -49,7 +48,7 @@ public class UpdateDataIntentService extends IntentService{
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		
-		UpdateTeamBoxDataManager updateManager = new UpdateTeamBoxDataManager(Utilities.getAccessToken(getApplicationContext()));
+		UpdateTeamBoxDataManager updateManager = new UpdateTeamBoxDataManager(getApplicationContext(),Utilities.getAccessToken(getApplicationContext()));
 		
 		try {
 			updateManager.updateAccount();
@@ -61,6 +60,12 @@ public class UpdateDataIntentService extends IntentService{
 			updateManager.updateProjects();
 		} catch (Exception e) {
 			alertError(getString(R.string.service_update_data_error) + " PROJECTS");
+		}
+
+		try {
+			updateManager.updateTasks();
+		} catch (Exception e) {
+			alertError(getString(R.string.service_update_data_error) + " TASKS");
 		}
 
 		publishUpdateCompleted();

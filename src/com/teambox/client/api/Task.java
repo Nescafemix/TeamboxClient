@@ -16,19 +16,31 @@
 
 package com.teambox.client.api;
 
-public class Project {
+public class Task {
 	
 	public String type;
 	public String created_at;
 	public String updated_at;
 	public long id;
-	public String permalink;
-	public long organization_id;
-	public boolean archived;
 	public String name;
-	public boolean tracks_time;
-	public boolean publish_pages;
-	public Object settings;
+	public long task_list_id;
+	public int comments_count;
+	public long assigned_id; //
+	public int status;
+	public boolean is_private;
+	public long project_id;
+	public boolean urgent;
+	public int hidden_comments_count;
+	public long user_id;
+	public int position;
+	public long last_activity_id;
+	public String record_conversion_type; //
+	public int record_conversion_id; //
 	public Object metadata;
-
+	public int[] watcher_ids;
+	public boolean deleted;
+	public String due_on;
+	public Object first_comment;
+	public Object recent_comments;
+	
 }
