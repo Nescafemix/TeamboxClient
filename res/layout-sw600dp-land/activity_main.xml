@@ -25,14 +25,41 @@
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
 
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <LinearLayout
+        android:id="@+id/screen_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" 
     	android:paddingLeft="@dimen/activity_horizontal_margin"
     	android:paddingRight="@dimen/activity_horizontal_margin"
-		android:paddingTop="@dimen/activity_vertical_margin"/>
+		android:paddingTop="@dimen/activity_vertical_margin"
+		android:orientation="horizontal"
+		android:baselineAligned="false">
 
+        <FrameLayout
+        	android:id="@+id/lateral_frame"
+	    	android:layout_width="250dp"
+	        android:layout_height="match_parent"
+	        android:paddingLeft="@dimen/activity_horizontal_margin"
+    		android:paddingRight="@dimen/activity_horizontal_margin"
+			android:paddingTop="@dimen/activity_vertical_margin">
+            
+			<fragment android:id="@+id/fragment_profile"
+				android:name="com.teambox.client.ui.fragments.ProfileFragment"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"/>
+		
+		</FrameLayout>	        
+	    
+	    <FrameLayout
+	        android:id="@+id/content_frame"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	    	android:paddingLeft="@dimen/activity_horizontal_margin"
+	    	android:paddingRight="@dimen/activity_horizontal_margin"
+			android:paddingTop="@dimen/activity_vertical_margin"/>
+
+    </LinearLayout>
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right
          languages and on the right side for right-to-left languages.

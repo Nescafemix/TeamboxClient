@@ -18,6 +18,7 @@ package com.teambox.client.db;
 import android.content.Context;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 
 /**
  * @author Joan Fuentes
@@ -29,22 +30,32 @@ public class AccountTable extends SugarRecord<AccountTable>{
 	public String lastName;
 	public String email;
 	public String username;
-	public String avatarUrl;
-	public String microAvatarUrl;
+	public String profileAvatarUrl;
+	public String profileAvatarUrlCached;
+	public String profileAvatarUrlLocalFile;
 
 	public AccountTable(Context context){
 		super(context);
 	}
 
-	public AccountTable(Context context, int accountId, String firstName, String lastName, String email, String username, String avatarUrl, String microAvatarUrl){
+	public AccountTable(Context context, int accountId, String firstName, String lastName, String email, String username, String profileAvatarUrl){
 		super(context);
 	    this.accountId = accountId;
 	    this.firstName = firstName;
 	    this.lastName = lastName;
 	    this.email = email;
 	    this.username = username;
-	    this.avatarUrl = avatarUrl;
-	    this.microAvatarUrl = microAvatarUrl;
+	    this.profileAvatarUrl = profileAvatarUrl;
 	    
 	  }
+	
+	public void update(int accountId, String firstName, String lastName, String email, String username, String profileAvatarUrl){
+	    this.accountId = accountId;
+	    this.firstName = firstName;
+	    this.lastName = lastName;
+	    this.email = email;
+	    this.username = username;
+	    this.profileAvatarUrl = profileAvatarUrl;
+	  }
+
 }

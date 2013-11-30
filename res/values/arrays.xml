@@ -2,5 +2,6 @@
     <string-array name="flyout_array">
         <item>Projects</item>
         <item>Tasks</item>
-    </string-array>
+        <item>Profile</item>
+        </string-array>
 </resources>

@@ -57,21 +57,39 @@ public class UpdateTeamBoxDataManager {
 	{
 	    // Fetch the account info.
 		Account account = mTeambox.account(mToken);
+
+		// Load the current account. If it exists it must be updated, otherwise, it must be saved. 
+		List<AccountTable> accounts = AccountTable.listAll(AccountTable.class);
+		AccountTable accountRow;
+		if(accounts.size()>0)
+		{
+			accountRow = accounts.get(0);
+			accountRow.update(
+					account.id,
+					account.first_name,
+					account.last_name,
+					account.email,
+					account.username,
+					account.profile_avatar_url);
+		    accountRow.save();
+			Log.v("TeamBoxClient", "Account from " + account.first_name + " " + account.last_name + " updated in DB");
+	
+		}else
+		{
+			accountRow = new AccountTable(
+					mContext,
+					account.id,
+					account.first_name,
+					account.last_name,
+					account.email,
+					account.username,
+					account.profile_avatar_url);
+			accountRow.save();
+			Log.v("TeamBoxClient", "Account from " + account.first_name + " " + account.last_name + " saved in DB");
+			
+		}
 		
-	    // Update data in Database
-		AccountTable.deleteAll(AccountTable.class);
-		AccountTable accountRow = new AccountTable(
-				mContext,
-				account.id,
-				account.first_name,
-				account.last_name,
-				account.email,
-				account.username,
-				account.avatar_url,
-				account.micro_avatar_url);
-	    accountRow.save();
 		
-		Log.v("TeamBoxClient", "Account from " + account.first_name + " " + account.last_name + " updated in DB");
 	    
 		return false;
 		
@@ -102,7 +120,7 @@ public class UpdateTeamBoxDataManager {
 			projectRow.save();
 		}
 	    
-		Log.v("TeamBoxClient", "Projects updated in DB. First: " + projects.get(0).name + ". Last: " + projects.get(projects.size()-1).name);
+		Log.v("TeamBoxClient", "Projects saved in DB. First: " + projects.get(0).name + ". Last: " + projects.get(projects.size()-1).name);
 
 	    return false;
 	}
@@ -140,7 +158,7 @@ public class UpdateTeamBoxDataManager {
 			taskRow.save();
 		}
 	    
-		Log.v("TeamBoxClient", "Tasks updated in DB. First: " + tasks.get(0).name + ". Last: " + tasks.get(tasks.size()-1).name);
+		Log.v("TeamBoxClient", "Tasks saved in DB. First: " + tasks.get(0).name + ". Last: " + tasks.get(tasks.size()-1).name);
 
 	    return false;
 	}

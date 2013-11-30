@@ -19,7 +19,9 @@ package com.teambox.client.ui.activities;
 import com.teambox.client.R;
 import com.teambox.client.Utilities;
 import com.teambox.client.services.UpdateDataIntentService;
+import com.teambox.client.ui.fragments.BaseFragment;
 import com.teambox.client.ui.fragments.BaseListFragment;
+import com.teambox.client.ui.fragments.ProfileFragment;
 import com.teambox.client.ui.fragments.ProjectsListFragment;
 import com.teambox.client.ui.fragments.TasksListFragment;
 
@@ -52,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
     public static final String ARG_SECTION_NUMBER = "section_number";
     public static final int FRAGMENT_PROJECTS = 0;
     public static final int FRAGMENT_TASKS = 1;
+    public static final int FRAGMENT_PROFILE = 2;
     public static final int FRAGMENT_ABOUT_US = 7;
 	
     private DrawerLayout mDrawerLayout;
@@ -210,6 +213,9 @@ public class MainActivity extends ActionBarActivity {
 		case FRAGMENT_TASKS:
 	        fragment = new TasksListFragment();			
 			break;
+		case FRAGMENT_PROFILE:
+	        fragment = new ProfileFragment();			
+			break;
 
 		default:
 			break;
@@ -297,7 +303,22 @@ public class MainActivity extends ActionBarActivity {
 		case UpdateDataIntentService.STATUS_COMPLETED:
 			refreshMenuItem.setActionView(null);
 			Crouton.showText(this,"UPDATE COMPLETED",Style.INFO);
-			((BaseListFragment)getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
+			if (isDeviceATablet())
+			{
+				((BaseListFragment)getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
+				((BaseFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_profile)).loadDataInViews();
+			}else
+			{
+				switch (mDrawerList.getCheckedItemPosition()) {
+				case FRAGMENT_PROFILE:
+					((BaseFragment)getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
+					break;
+
+				default:
+					((BaseListFragment)getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
+					break;
+				}
+			}
 			break;
 		default:
 			refreshMenuItem.setActionView(R.drawable.action_progressbar);
@@ -307,6 +328,16 @@ public class MainActivity extends ActionBarActivity {
 	}
 
     
+	/**
+	 * If exist the fragment "fragment_profile" in the loaded layout, user is using a Tablet as devicw
+	 * 
+	 * @return
+	 */
+	private boolean isDeviceATablet() {
+		return (((BaseFragment)getSupportFragmentManager().findFragmentById(R.id.lateral_frame)) != null);
+	}
+
+
 	private void returnToLogin() {
 		Intent intent;
 		intent = new Intent(this,LoginActivity.class);
