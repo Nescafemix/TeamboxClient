@@ -7,11 +7,12 @@ import com.teambox.client.R;
 import com.teambox.client.adapters.ProjectAdapter;
 import com.teambox.client.db.ProjectTable;
 import com.teambox.client.db.TaskTable;
+import com.teambox.client.ui.activities.MainActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 
@@ -25,7 +26,17 @@ public class ProjectsListFragment extends BaseListFragment{
 	    projectAdapter = new ProjectAdapter(getActivity(), R.layout.project_list_item, infoToLoad);
 	    setListAdapter(projectAdapter);
 
+	    setupActionBar();
+
 	    loadDataInViews();	    
+
+	}
+
+
+	private void setupActionBar() {
+		final ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
+	    actionBar.setDisplayShowTitleEnabled(true);
+	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 	}
 
     
@@ -37,11 +48,11 @@ public class ProjectsListFragment extends BaseListFragment{
 	
 	@Override
 	public void loadDataInViews() {		
-	    new LoadDataInViewsAsyncTask().execute();
+	    new LoadDataInListViewAsyncTask().execute();
 	}
 
 	
-	private class LoadDataInViewsAsyncTask extends AsyncTask<Void, Void, Void>{
+	private class LoadDataInListViewAsyncTask extends AsyncTask<Void, Void, Void>{
 
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -54,9 +65,7 @@ public class ProjectsListFragment extends BaseListFragment{
 		@Override
 		protected void onPostExecute(Void result) {
 		    
-			BaseListFragment fragment = (BaseListFragment) getFragmentManager().findFragmentById(R.id.content_frame);
-		    ((BaseAdapter) fragment.getListAdapter()).notifyDataSetChanged();
-		    
+			notifyDataSetChangedToAdapter();
 		}		 
 
 		private void refreshInfoToShow(List<ProjectTable> projectList){

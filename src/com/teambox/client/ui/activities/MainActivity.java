@@ -26,7 +26,6 @@ import com.teambox.client.ui.fragments.TasksListFragment;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -153,8 +152,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -168,7 +165,6 @@ public class MainActivity extends ActionBarActivity {
         }
         
         // Handle action buttons
-        Intent intent;
         switch(item.getItemId()) {
         case R.id.action_refresh:
 
@@ -179,19 +175,6 @@ public class MainActivity extends ActionBarActivity {
         	
         	Utilities.processLogout(getApplicationContext(),getSupportFragmentManager());
             returnToLogin();
-            
-            return true;
-        case R.id.action_websearch:
-
-        	// create intent to perform web search for this planet
-            intent = new Intent(Intent.ACTION_WEB_SEARCH);
-            intent.putExtra(SearchManager.QUERY, getSupportActionBar().getTitle());
-            // catch event that there's no activity to handle intent
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            } else {
-            	Crouton.showText(this, R.string.app_not_available, Style.ALERT);
-            }
             
             return true;
         default:

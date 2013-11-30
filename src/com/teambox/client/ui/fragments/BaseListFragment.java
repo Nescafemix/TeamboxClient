@@ -15,7 +15,10 @@
  */
 package com.teambox.client.ui.fragments;
 
+import com.teambox.client.R;
+
 import android.support.v4.app.ListFragment;
+import android.widget.BaseAdapter;
 
 /**
  * @author Joan Fuentes
@@ -25,4 +28,16 @@ public abstract class BaseListFragment extends ListFragment{
     protected static final String ARG_SECTION_NUMBER = "section_number";
 
 	public abstract void loadDataInViews();
+	
+	final public void notifyDataSetChangedToAdapter()  {
+	    getActivity().runOnUiThread(new Runnable()  {
+	        public void run() {
+	            if(getListAdapter() != null) {
+	    			BaseListFragment fragment = (BaseListFragment) getFragmentManager().findFragmentById(R.id.content_frame);
+	    		    ((BaseAdapter) fragment.getListAdapter()).notifyDataSetChanged();
+	             }
+	        }
+	    });
+	}
+
 }

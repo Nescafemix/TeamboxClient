@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout1"
-    style="@style/Layout_task_list_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal" 
+    style="@style/Layout_task_list_item">
 
     <TextView
         android:id="@+id/textViewProjectName"
-        style="@style/Text_fragment_task_list_name"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@null" />
+        android:text="@null" 
+        style="@style/Text_fragment_task_list_name"/>
 
     <Button
         android:id="@+id/buttonTasksCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@null" />
+        android:layout_marginLeft="20dp"
+        android:text="@null" 
+        style="@style/Button_tasks_counter"/>
 
 </LinearLayout>

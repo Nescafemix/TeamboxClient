@@ -116,11 +116,15 @@
 	</style>
     
     
-	<style name="Button_Login" parent="@style/Button.Base">
+	<style name="Button_login" parent="@style/Button.Base">
 	    <item name="android:textSize">24sp</item>
 	    <item name="android:paddingRight">50dp</item>
 	    <item name="android:paddingLeft">50dp</item>
 	</style>
-	
+
+	<style name="Button_tasks_counter" parent="@android:style/Widget.Holo.Light.Button">
+	    <item name="android:textSize">18sp</item>
+	</style>
+		
     
 </resources>

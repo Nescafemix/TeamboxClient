@@ -47,9 +47,6 @@ public class ProjectAdapter extends BaseAdapter {
         this.mContext = context;
         this.mLayoutResourceId = layoutResourceId;
         this.mProjects = projects;
- 
-        // We must notify that we've changed the elements
-        notifyDataSetChanged();
     }
  
     public int getCount() {
@@ -61,7 +58,7 @@ public class ProjectAdapter extends BaseAdapter {
     }
  
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
  
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -92,7 +89,7 @@ public class ProjectAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				
+
 				TasksListFragment fragment = new TasksListFragment();
 				Bundle arguments = new Bundle();
 				arguments.putLong(TasksListFragment.ARG_PROJECT_FILTER, project.projectId);

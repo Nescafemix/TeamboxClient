@@ -41,6 +41,7 @@ public class ProjectTable extends SugarRecord<ProjectTable>{
 		super(context);
 	}
 
+
 	public ProjectTable(Context context, String type, String createdAt, String updatedAt, long projectId, String permalink, long organizationId, boolean archived, String name, boolean tracksTime, boolean publishPages){
 		super(context);
 	    this.type = type;
@@ -55,5 +56,12 @@ public class ProjectTable extends SugarRecord<ProjectTable>{
 	    this.publishPages = publishPages;
 	    
 	  }
+
+	public ProjectTable(Context context,long projectId, String name){
+		super(context);
+	    this.projectId = projectId;
+	    this.name = name;
+	}
+
 	
 }
