@@ -18,6 +18,7 @@ package com.teambox.client.adapters;
 import java.util.List;
 
 import com.teambox.client.R;
+import com.teambox.client.Utilities;
 import com.teambox.client.db.ProjectTable;
 import com.teambox.client.ui.activities.MainActivity;
 import com.teambox.client.ui.fragments.TasksListFragment;
@@ -74,7 +75,11 @@ public class ProjectAdapter extends BaseAdapter {
             
             holder = new TaskHolder();
             holder.name = (TextView)row.findViewById(R.id.textViewProjectName);
-            holder.tasksCount = (Button)row.findViewById(R.id.buttonTasksCount);
+            holder.tasksCountNew = (Button)row.findViewById(R.id.buttonTasksCountNew);
+            holder.tasksCountOpen = (Button)row.findViewById(R.id.buttonTasksCountOpen);
+            holder.tasksCountHold = (Button)row.findViewById(R.id.buttonTasksCountHold);
+            holder.tasksCountResolved = (Button)row.findViewById(R.id.buttonTasksCountResolved);
+            holder.tasksCountRejected = (Button)row.findViewById(R.id.buttonTasksCountRejected);
             
             row.setTag(holder);
         }
@@ -84,12 +89,28 @@ public class ProjectAdapter extends BaseAdapter {
         }
         
         holder.name.setText(project.name);
-        holder.tasksCount.setText(String.valueOf(project.tasksCount));
-        holder.tasksCount.setOnClickListener(new OnClickListener() {
+        holder.tasksCountNew.setText(String.valueOf(project.tasksCountNew));
+        holder.tasksCountOpen.setText(String.valueOf(project.tasksCountOpen));
+        holder.tasksCountHold.setText(String.valueOf(project.tasksCountHold));
+        holder.tasksCountResolved.setText(String.valueOf(project.tasksCountResolved));
+        holder.tasksCountRejected.setText(String.valueOf(project.tasksCountRejected));
+        holder.tasksCountNew.setOnClickListener(getOnClickListener(project,2));
+        holder.tasksCountOpen.setOnClickListener(getOnClickListener(project,3));
+        holder.tasksCountHold.setOnClickListener(getOnClickListener(project,4));
+        holder.tasksCountResolved.setOnClickListener(getOnClickListener(project,5));
+        holder.tasksCountRejected.setOnClickListener(getOnClickListener(project,5));
+        
+        return row;
+    }
+
+	private OnClickListener getOnClickListener(final ProjectTable project, final int taskStatusSelectedPositionInArray) {
+		return new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 
+				Utilities.setTaskStatusFilterSelectionInSharedPreferences(mContext, taskStatusSelectedPositionInArray);
+				
 				TasksListFragment fragment = new TasksListFragment();
 				Bundle arguments = new Bundle();
 				arguments.putLong(TasksListFragment.ARG_PROJECT_FILTER, project.projectId);
@@ -102,14 +123,17 @@ public class ProjectAdapter extends BaseAdapter {
 				//Update the item selected in Drawer (and ActionBar)
 				((MainActivity) mContext).updateSelectedItemInDrawer(MainActivity.FRAGMENT_TASKS);
 			}
-		});
-        
-        return row;
-    }
+		};
+	}
     
     static class TaskHolder
     {
         TextView name;
-        Button tasksCount;
+        Button tasksCountNew;
+        Button tasksCountOpen;
+        Button tasksCountHold;
+        Button tasksCountResolved;
+        Button tasksCountRejected;
+        
     }
 }

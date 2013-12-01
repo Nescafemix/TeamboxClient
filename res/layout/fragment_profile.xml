@@ -39,6 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:text="@null" />
+        android:text="@string/fragment_profile_logout" />
 
 </LinearLayout>

@@ -16,6 +16,7 @@
 package com.teambox.client.ui.fragments;
 
 import com.teambox.client.R;
+import com.teambox.client.Updatable;
 
 import android.support.v4.app.ListFragment;
 import android.widget.BaseAdapter;
@@ -24,10 +25,8 @@ import android.widget.BaseAdapter;
  * @author Joan Fuentes
  *
  */
-public abstract class BaseListFragment extends ListFragment{
+public abstract class BaseListFragment extends ListFragment implements Updatable{
     protected static final String ARG_SECTION_NUMBER = "section_number";
-
-	public abstract void loadDataInViews();
 	
 	final public void notifyDataSetChangedToAdapter()  {
 	    getActivity().runOnUiThread(new Runnable()  {

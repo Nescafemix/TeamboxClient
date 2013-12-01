@@ -108,6 +108,22 @@
 	<style name="Text_fragment_task_list_comments_count_title" parent="@style/Text_fragment_task_list_comments_count">
 		<item name="android:layout_marginLeft">5dp</item>
 	</style>
+	
+	<style name="Text_fragment_project_list_status_title" parent="@android:style/TextAppearance.Small">
+	    <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+	    <item name="android:textColor">@color/text_fragment_task_list_primary</item>
+	    <item name="android:textSize">11sp</item>
+	    <item name="android:textStyle">normal</item>
+	    <item name="android:gravity">center_horizontal</item>
+    </style>
+
+	<style name="Text_fragment_project_list_name" parent="@android:style/TextAppearance.Medium">
+	    <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+	    <item name="android:textColor">@color/text_fragment_task_list_primary</item>
+	    <item name="android:textSize">16sp</item>
+	    <item name="android:textStyle">normal</item>
+    </style>
+		
 			
     <!--
         Button styles
@@ -122,9 +138,13 @@
 	    <item name="android:paddingLeft">50dp</item>
 	</style>
 
-	<style name="Button_tasks_counter" parent="@android:style/Widget.Holo.Light.Button">
-	    <item name="android:textSize">18sp</item>
+	<style name="Button_tasks_counter_new" parent="@android:style/Widget.Holo.Light.Button.Small">
+	    <item name="android:textSize">16sp</item>
 	</style>
-		
+
+	<style name="Button_tasks_counter_other" parent="@android:style/Widget.Holo.Light.Button.Small">
+	    <item name="android:textSize">14sp</item>
+	</style>
+			
     
 </resources>

@@ -3,13 +3,17 @@ package com.teambox.client.ui.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.teambox.client.Application;
 import com.teambox.client.R;
+import com.teambox.client.Utilities;
 import com.teambox.client.adapters.DropDrownProjectsListAdapter;
 import com.teambox.client.adapters.TaskAdapter;
 import com.teambox.client.db.ProjectTable;
 import com.teambox.client.db.TaskTable;
 import com.teambox.client.ui.activities.MainActivity;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -24,12 +28,14 @@ public class TasksListFragment extends BaseListFragment {
 	
     private TaskAdapter taskAdapter;
 	private List<TaskTable> infoToLoad = new ArrayList<TaskTable>();
-	public DropDrownProjectsListAdapter dropDownAdapter;
-	public long projectIdToFilter;
+	private DropDrownProjectsListAdapter dropDownAdapter;
+	private long projectIdToFilter;
+	private SharedPreferences	sharedPreferences;
+	private SharedPreferences.OnSharedPreferenceChangeListener	onSharedPreferenceChangeListener;
 	
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    	super.onActivityCreated(savedInstanceState);
 
 		projectIdToFilter = getArguments().getLong(ARG_PROJECT_FILTER);
 
@@ -37,11 +43,42 @@ public class TasksListFragment extends BaseListFragment {
 	    setListAdapter(taskAdapter);
 
 	    
-	    
 	    setupActionBar();
 
 	    new LoadDataInDropDownOfActionBarAsyncTask().execute();
 	    //loadDataInViews();	    	    
+	}
+
+
+    @Override
+    public void onResume() {
+    	registerListenerToControlTaskStatusFilter();
+    	super.onResume();
+    }
+    
+    @Override
+    public void onPause() {
+		unregisterListenerToControlTaskStatusFilter();
+    	super.onPause();
+    }
+    
+
+	private void unregisterListenerToControlTaskStatusFilter() {
+	    sharedPreferences.unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+	}
+
+	private void registerListenerToControlTaskStatusFilter() {
+		sharedPreferences = getActivity().getSharedPreferences(Application.APP_STORE_PREF_FILE, Activity.MODE_PRIVATE); 
+	    onSharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+	    	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+	    		if(key.equalsIgnoreCase(Application.ARG_FILTER_TASK_STATUS))
+	    		{
+	    			new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Utilities.getTaskStatusFilterValueInSharedPreferences(getActivity()));
+	    		}
+	    	}
+
+	    };
+	    sharedPreferences.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
 	}
 
     
@@ -53,7 +90,7 @@ public class TasksListFragment extends BaseListFragment {
 	
 	@Override
 	public void loadDataInViews() {		
-	    new LoadDataInListViewAsyncTask().execute(projectIdToFilter);
+	    new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Utilities.getTaskStatusFilterValueInSharedPreferences(getActivity()));
 	    new LoadDataInDropDownOfActionBarAsyncTask().execute();
 	}
 
@@ -62,14 +99,13 @@ public class TasksListFragment extends BaseListFragment {
 
 		@Override
 		protected Void doInBackground(Long... params) {
-			// With params[0]=0 no filter is needed 
-			if(params[0] > 0)
-			{
-				refreshInfoToShow(infoToLoad, params[0]);
-			}else
-			{
-				refreshInfoToShow(infoToLoad);
-			}
+			Long projectIdToFilter = params[0];	// With projectIdToFilter==0 no filter by project is needed 
+			Long taskStatusToFilter = params[1]; 	// With taskStatusToFilter==-1 no filter by task status is needed
+			projectIdToFilter = (projectIdToFilter == 0 ? null : projectIdToFilter);
+			taskStatusToFilter = (taskStatusToFilter == -1 ? null : taskStatusToFilter);
+			
+			refreshInfoToShow(infoToLoad, projectIdToFilter,taskStatusToFilter);
+			
 			return null;
 		}
 		
@@ -79,25 +115,47 @@ public class TasksListFragment extends BaseListFragment {
 			notifyDataSetChangedToAdapter();
 		    
 		}		 
-
-		private void refreshInfoToShow(List<TaskTable> taskList){
-			List<TaskTable> tasks = TaskTable.listAll(TaskTable.class);
-
-			taskList.clear();
-			for (int i = 0; i < tasks.size(); i++) {
-				taskList.add (tasks.get(i));
-			}
-		}
-
 		
-		private void refreshInfoToShow(List<TaskTable> taskList, long projectIdToFilter){
-			List<TaskTable> tasks = TaskTable.find(TaskTable.class,"project_id = ?",String.valueOf(projectIdToFilter));
+		private void refreshInfoToShow(List<TaskTable> taskList, Long projectIdToFilter,Long taskStatusToFilter){
+			
+			List<TaskTable> tasks = getFilteredTasks(projectIdToFilter, taskStatusToFilter);
 
+			updateSourceData(taskList, tasks);
+		}
+
+		private void updateSourceData(List<TaskTable> taskList, List<TaskTable> tasks) {
 			taskList.clear();
 			for (int i = 0; i < tasks.size(); i++) {
 				taskList.add (tasks.get(i));
 			}
 		}
+
+		private List<TaskTable> getFilteredTasks(Long projectIdToFilter, Long taskStatusToFilter) {
+			String filterWhereSQL = "";
+
+			if (projectIdToFilter != null)
+			{
+				filterWhereSQL = filterWhereSQL + "project_id = " + projectIdToFilter.longValue() + " AND ";
+			}
+			
+			if (taskStatusToFilter != null)
+			{
+				filterWhereSQL = filterWhereSQL + "status = " + taskStatusToFilter.longValue() + " AND ";
+			}
+			
+			List<TaskTable> tasks;
+			if(filterWhereSQL.length()>0)
+			{
+				filterWhereSQL = filterWhereSQL.substring(0, filterWhereSQL.length()-5);
+				tasks = TaskTable.find(TaskTable.class,filterWhereSQL);
+				
+			}else{
+				tasks = TaskTable.listAll(TaskTable.class);
+			}
+			
+			return tasks;
+		}
+
 	}
 	
 	private class LoadDataInDropDownOfActionBarAsyncTask extends AsyncTask<Void, Void, Void>{
@@ -150,7 +208,7 @@ public class TasksListFragment extends BaseListFragment {
 					if (isDropDownListLoaded())
 					{
 						projectIdToFilter = infoToLoadAtDropDownListOfActionBar.get(position).projectId;
-						new LoadDataInListViewAsyncTask().execute(projectIdToFilter);
+						new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Utilities.getTaskStatusFilterValueInSharedPreferences(getActivity()));
 					}
 				return true;
 			}

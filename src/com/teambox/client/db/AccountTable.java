@@ -18,7 +18,6 @@ package com.teambox.client.db;
 import android.content.Context;
 
 import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
 
 /**
  * @author Joan Fuentes

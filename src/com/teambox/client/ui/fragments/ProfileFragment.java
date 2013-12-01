@@ -20,11 +20,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ProfileFragment extends BaseFragment {
+public class ProfileFragment extends BaseFragment{
 
 	TextView textViewName;
 	TextView textViewEmail;
@@ -47,6 +49,16 @@ public class ProfileFragment extends BaseFragment {
 		textViewName = (TextView) view.findViewById(R.id.textViewName);
 		textViewEmail = (TextView) view.findViewById(R.id.textViewEmail);
 		imageViewProfilePhoto = (ImageView) view.findViewById(R.id.imageViewProfilePhoto);
+		
+		((Button) view.findViewById(R.id.buttonLogout)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				Utilities.processLogout(getActivity(), getFragmentManager());
+				Utilities.returnToLoginScreen(getActivity().getApplicationContext());
+			}
+		});
 		
 		return view;
 	}

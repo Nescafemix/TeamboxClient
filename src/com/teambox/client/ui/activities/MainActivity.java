@@ -17,10 +17,11 @@
 package com.teambox.client.ui.activities;
 
 import com.teambox.client.R;
+import com.teambox.client.Updatable;
 import com.teambox.client.Utilities;
 import com.teambox.client.services.UpdateDataIntentService;
-import com.teambox.client.ui.fragments.BaseFragment;
-import com.teambox.client.ui.fragments.BaseListFragment;
+import com.teambox.client.ui.fragments.DummyFragment;
+import com.teambox.client.ui.fragments.FilterFragment;
 import com.teambox.client.ui.fragments.ProfileFragment;
 import com.teambox.client.ui.fragments.ProjectsListFragment;
 import com.teambox.client.ui.fragments.TasksListFragment;
@@ -55,6 +56,7 @@ public class MainActivity extends ActionBarActivity {
     public static final int FRAGMENT_PROJECTS = 0;
     public static final int FRAGMENT_TASKS = 1;
     public static final int FRAGMENT_PROFILE = 2;
+    public static final int FRAGMENT_FILTER = 3;
     public static final int FRAGMENT_ABOUT_US = 7;
 	
     private DrawerLayout mDrawerLayout;
@@ -146,7 +148,7 @@ public class MainActivity extends ActionBarActivity {
         // Store the reference to the Refresh button to can control the animation of "uploading" in the action bar
         // the reference is used to stop the animation when the activity changes to background. 
         refreshMenuItem = menu.findItem(R.id.action_refresh);
-        
+                
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -169,21 +171,27 @@ public class MainActivity extends ActionBarActivity {
         
         // Handle action buttons
         switch(item.getItemId()) {
-        case R.id.action_refresh:
-
-        	updateProcess();
-        	
-            return true;
-        case R.id.action_logout:
-        	
-        	Utilities.processLogout(getApplicationContext(),getSupportFragmentManager());
-            returnToLogin();
-            
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+	        case R.id.action_refresh:
+	
+	        	updateProcess();
+	        	
+	            return true;
+	        case R.id.action_filter_tasks_by_status:
+	        	
+	        	openFilterScreen();
+	        	
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
         }
     }
+
+
+	private void openFilterScreen() {
+		Fragment fragment = new FilterFragment();	
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+	}
 
 
 	private void updateProcess() {
@@ -203,22 +211,37 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void selectItem(int position) {
+        if(Utilities.isDeviceATablet(this))
+        {
+            loadNewFragmentInLateralFrame(position);
+        }
+
         // update the main content by replacing fragments
+        loadNewFragmentInContentFrame(position);
+
+        
+        // update selected item and title, then close the drawer
+        updateSelectedItemInDrawer(position);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+
+	private void loadNewFragmentInContentFrame(int position) {
     	Fragment fragment = null;
     	
     	switch (position) {
-		case FRAGMENT_PROJECTS:
-	        fragment = new ProjectsListFragment();			
-			break;
-		case FRAGMENT_TASKS:
-	        fragment = new TasksListFragment();			
-			break;
-		case FRAGMENT_PROFILE:
-	        fragment = new ProfileFragment();			
-			break;
-
-		default:
-			break;
+			case FRAGMENT_PROJECTS:
+		        fragment = new ProjectsListFragment();			
+				break;
+			case FRAGMENT_TASKS:
+		        fragment = new TasksListFragment();			
+				break;
+			case FRAGMENT_PROFILE:
+		        fragment = new ProfileFragment();			
+				break;
+	
+			default:
+				break;
 		}
     	
     	if(fragment!=null)
@@ -230,10 +253,32 @@ public class MainActivity extends ActionBarActivity {
 	        FragmentManager fragmentManager = getSupportFragmentManager();
 	        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     	}
-        // update selected item and title, then close the drawer
-        updateSelectedItemInDrawer(position);
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
+	}
+
+	private void loadNewFragmentInLateralFrame(int position) {
+    	Fragment fragment = null;
+    	
+    	switch (position) {
+			case FRAGMENT_PROJECTS:
+		        fragment = new DummyFragment();			
+				break;
+			case FRAGMENT_TASKS:
+		        fragment = new FilterFragment();			
+				break;
+			case FRAGMENT_PROFILE:
+		        fragment = new DummyFragment();			
+				break;
+	
+			default:
+				break;
+		}
+    	
+    	if(fragment!=null)
+    	{
+	        FragmentManager fragmentManager = getSupportFragmentManager();
+	        fragmentManager.beginTransaction().replace(R.id.lateral_frame, fragment).commit();
+    	}
+	}
 
 
 	public void updateSelectedItemInDrawer(int position) {
@@ -303,21 +348,13 @@ public class MainActivity extends ActionBarActivity {
 		case UpdateDataIntentService.STATUS_COMPLETED:
 			refreshMenuItem.setActionView(null);
 			Crouton.showText(this,"UPDATE COMPLETED",Style.INFO);
-			if (isDeviceATablet())
+			if (Utilities.isDeviceATablet(this))
 			{
-				((BaseListFragment)getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
-				((BaseFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_profile)).loadDataInViews();
+				((Updatable) getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
+				((Updatable) getSupportFragmentManager().findFragmentById(R.id.lateral_frame)).loadDataInViews();
 			}else
 			{
-				switch (mDrawerList.getCheckedItemPosition()) {
-				case FRAGMENT_PROFILE:
-					((BaseFragment)getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
-					break;
-
-				default:
-					((BaseListFragment)getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
-					break;
-				}
+				((Updatable) getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
 			}
 			break;
 		default:
@@ -328,23 +365,6 @@ public class MainActivity extends ActionBarActivity {
 	}
 
     
-	/**
-	 * If exist the fragment "fragment_profile" in the loaded layout, user is using a Tablet as devicw
-	 * 
-	 * @return
-	 */
-	private boolean isDeviceATablet() {
-		return (((BaseFragment)getSupportFragmentManager().findFragmentById(R.id.lateral_frame)) != null);
-	}
-
-
-	private void returnToLogin() {
-		Intent intent;
-		intent = new Intent(this,LoginActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(intent);
-	}
 
 
 }
