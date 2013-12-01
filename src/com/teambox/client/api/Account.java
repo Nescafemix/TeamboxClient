@@ -22,6 +22,7 @@ package com.teambox.client.api;
  *
  */
 public class Account {
+	
 	public String type;
 	public String created_at;
 	public String updated_at;

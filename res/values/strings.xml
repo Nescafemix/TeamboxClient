@@ -17,5 +17,7 @@
     <string name="fragment_task_list_textview_task_list_comments_count_title_singular">comment</string>
     <string name="fragment_task_list_textview_task_list_comments_count_title_plural">comments</string>
     <string name="fragment_profile_logout">Log out</string>
+    <string name="fragment_tasks_filter_by_status_title">Tasks filter by status:</string>
+    <string name="fragment_projects_summary_title">Summary:</string>
     
 </resources>

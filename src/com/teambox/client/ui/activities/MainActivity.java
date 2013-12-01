@@ -24,6 +24,7 @@ import com.teambox.client.ui.fragments.DummyFragment;
 import com.teambox.client.ui.fragments.FilterFragment;
 import com.teambox.client.ui.fragments.ProfileFragment;
 import com.teambox.client.ui.fragments.ProjectsListFragment;
+import com.teambox.client.ui.fragments.ProjectsSummaryFragment;
 import com.teambox.client.ui.fragments.TasksListFragment;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -211,22 +212,31 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void selectItem(int position) {
-        if(Utilities.isDeviceATablet(this))
+    	
+    	long projectIdFilter = 0; // No project filter is used
+        loadNewFragments(position,projectIdFilter); //
+        
+        //Close the Drawer (lateral navigation bar)
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+
+	public void loadNewFragments(int position, long projectIdFilter) {
+		if(Utilities.isDeviceATablet(this))
         {
             loadNewFragmentInLateralFrame(position);
         }
 
         // update the main content by replacing fragments
-        loadNewFragmentInContentFrame(position);
+        loadNewFragmentInContentFrame(position, projectIdFilter);
 
         
         // update selected item and title, then close the drawer
         updateSelectedItemInDrawer(position);
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
+	}
 
 
-	private void loadNewFragmentInContentFrame(int position) {
+	private void loadNewFragmentInContentFrame(int position, long projectIdFilter) {
     	Fragment fragment = null;
     	
     	switch (position) {
@@ -248,6 +258,7 @@ public class MainActivity extends ActionBarActivity {
     	{
 	        Bundle args = new Bundle();
 	        args.putInt(ARG_SECTION_NUMBER, position);
+	        args.putLong(TasksListFragment.ARG_PROJECT_FILTER, projectIdFilter);
 	        fragment.setArguments(args);
 	
 	        FragmentManager fragmentManager = getSupportFragmentManager();
@@ -260,7 +271,7 @@ public class MainActivity extends ActionBarActivity {
     	
     	switch (position) {
 			case FRAGMENT_PROJECTS:
-		        fragment = new DummyFragment();			
+		        fragment = new ProjectsSummaryFragment();			
 				break;
 			case FRAGMENT_TASKS:
 		        fragment = new FilterFragment();			

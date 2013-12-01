@@ -3,21 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FilterFragment" >
+    tools:context=".FilterFragment" 
+    style="@style/Layout_lateral_fragment">
 
-    <TextView
-        android:id="@+id/textViewTaskFilterByStatusTitle"
+	<TextView
+        android:id="@+id/textViewProjectsSummaryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_tasks_filter_by_status_title"
+        android:text="@string/fragment_projects_summary_title"
 		style="@style/Text_fragment_lateral_title"/>
-
-    <RadioGroup
-        android:id="@+id/radioGroupFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-
-    </RadioGroup>
+    
 
 </LinearLayout>

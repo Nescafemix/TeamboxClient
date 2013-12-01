@@ -15,6 +15,7 @@
     <color name="background_flyout_menu_item_activated">#3da8d1</color>
     <color name="background_task_list_item">#fff</color>
     <color name="background_task_list_item_activated">#3da8d1</color>
+    <color name="background_lateral_fragment">#fff</color>
     
     
     <color name="text_flyout_menu_item">#fff</color>
@@ -22,6 +23,7 @@
     <color name="text_activity_login_unofficial">#3cb7c4</color>
     <color name="text_fragment_task_list_primary">#000</color>
     <color name="text_fragment_task_list_secondary">#333</color>
+    <color name="text_fragment_lateral_title">#000</color>
     
     
 </resources>

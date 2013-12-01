@@ -21,11 +21,9 @@ import com.teambox.client.R;
 import com.teambox.client.Utilities;
 import com.teambox.client.db.ProjectTable;
 import com.teambox.client.ui.activities.MainActivity;
-import com.teambox.client.ui.fragments.TasksListFragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -111,17 +109,8 @@ public class ProjectAdapter extends BaseAdapter {
 
 				Utilities.setTaskStatusFilterSelectionInSharedPreferences(mContext, taskStatusSelectedPositionInArray);
 				
-				TasksListFragment fragment = new TasksListFragment();
-				Bundle arguments = new Bundle();
-				arguments.putLong(TasksListFragment.ARG_PROJECT_FILTER, project.projectId);
-				fragment.setArguments(arguments);
-				((MainActivity) mContext).getSupportFragmentManager()
-					.beginTransaction()
-						.replace(R.id.content_frame, fragment)
-						.commit();	
+				((MainActivity) mContext).loadNewFragments(MainActivity.FRAGMENT_TASKS, project.projectId);
 				
-				//Update the item selected in Drawer (and ActionBar)
-				((MainActivity) mContext).updateSelectedItemInDrawer(MainActivity.FRAGMENT_TASKS);
 			}
 		};
 	}
