@@ -18,8 +18,8 @@ package com.teambox.client.services;
 
 import retrofit.RetrofitError;
 
+import com.teambox.client.Application;
 import com.teambox.client.R;
-import com.teambox.client.Utilities;
 import com.teambox.client.managers.UpdateTeamBoxDataManager;
 
 import android.app.IntentService;
@@ -48,7 +48,7 @@ public class UpdateDataIntentService extends IntentService{
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		
-		UpdateTeamBoxDataManager updateManager = new UpdateTeamBoxDataManager(getApplicationContext(),Utilities.getAccessToken(getApplicationContext()));
+		UpdateTeamBoxDataManager updateManager = new UpdateTeamBoxDataManager(getApplicationContext(),Application.getOAuthAccessToken(getApplicationContext()));
 		
 		try {
 			updateManager.updateAccount();

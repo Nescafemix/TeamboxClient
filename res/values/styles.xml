@@ -72,7 +72,7 @@
     
 
     <!--
-        Layoput styles
+        Layout styles
     -->
     
     <style name="Layout_task_list_item">
@@ -84,6 +84,12 @@
 	    <item name="android:background">@color/background_lateral_fragment</item>
 	    <item name="android:padding">10dp</item>
     </style>
+    
+    <style name="Layout_content_fragment">
+	    <item name="android:background">@color/background_content_fragment</item>
+	    <item name="android:padding">10dp</item>
+    </style>
+    
     
     <!--
         Text styles
@@ -133,7 +139,13 @@
 	    <item name="android:textColor">@color/text_fragment_lateral_title</item>
 	    <item name="android:textStyle">normal</item>
     </style>
-			
+	
+	<style name="Text_fragment_content_title" parent="@android:style/TextAppearance.Medium">
+	    <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+	    <item name="android:textColor">@color/text_fragment_content_title</item>
+	    <item name="android:textStyle">normal</item>
+    </style>
+				
 			
     <!--
         Button styles

@@ -54,7 +54,7 @@ public class ProjectsSummaryFragment extends BaseFragment{
 
 	
 	@Override
-	public void loadDataInViews() {
+	public void refreshDataInViews() {
 
 		
 	}

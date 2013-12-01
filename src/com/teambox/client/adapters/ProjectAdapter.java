@@ -17,8 +17,8 @@ package com.teambox.client.adapters;
 
 import java.util.List;
 
+import com.teambox.client.Application;
 import com.teambox.client.R;
-import com.teambox.client.Utilities;
 import com.teambox.client.db.ProjectTable;
 import com.teambox.client.ui.activities.MainActivity;
 
@@ -107,7 +107,7 @@ public class ProjectAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 
-				Utilities.setTaskStatusFilterSelectionInSharedPreferences(mContext, taskStatusSelectedPositionInArray);
+				Application.setTaskStatusFilterSelection(mContext, taskStatusSelectedPositionInArray);
 				
 				((MainActivity) mContext).loadNewFragments(MainActivity.FRAGMENT_TASKS, project.projectId);
 				

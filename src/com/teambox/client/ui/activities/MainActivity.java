@@ -20,9 +20,9 @@ import com.teambox.client.R;
 import com.teambox.client.Updatable;
 import com.teambox.client.Utilities;
 import com.teambox.client.services.UpdateDataIntentService;
-import com.teambox.client.ui.fragments.DummyFragment;
+import com.teambox.client.ui.fragments.ProfileDetailFragment;
 import com.teambox.client.ui.fragments.FilterFragment;
-import com.teambox.client.ui.fragments.ProfileFragment;
+import com.teambox.client.ui.fragments.ProfileSummaryFragment;
 import com.teambox.client.ui.fragments.ProjectsListFragment;
 import com.teambox.client.ui.fragments.ProjectsSummaryFragment;
 import com.teambox.client.ui.fragments.TasksListFragment;
@@ -84,7 +84,7 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mFlyoutTitles));
+                R.layout.list_item_drawer, mFlyoutTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -247,7 +247,7 @@ public class MainActivity extends ActionBarActivity {
 		        fragment = new TasksListFragment();			
 				break;
 			case FRAGMENT_PROFILE:
-		        fragment = new ProfileFragment();			
+		        fragment = new ProfileDetailFragment();			
 				break;
 	
 			default:
@@ -277,7 +277,7 @@ public class MainActivity extends ActionBarActivity {
 		        fragment = new FilterFragment();			
 				break;
 			case FRAGMENT_PROFILE:
-		        fragment = new DummyFragment();			
+		        fragment = new ProfileSummaryFragment();			
 				break;
 	
 			default:
@@ -361,11 +361,11 @@ public class MainActivity extends ActionBarActivity {
 			Crouton.showText(this,"UPDATE COMPLETED",Style.INFO);
 			if (Utilities.isDeviceATablet(this))
 			{
-				((Updatable) getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
-				((Updatable) getSupportFragmentManager().findFragmentById(R.id.lateral_frame)).loadDataInViews();
+				((Updatable) getSupportFragmentManager().findFragmentById(R.id.content_frame)).refreshDataInViews();
+				((Updatable) getSupportFragmentManager().findFragmentById(R.id.lateral_frame)).refreshDataInViews();
 			}else
 			{
-				((Updatable) getSupportFragmentManager().findFragmentById(R.id.content_frame)).loadDataInViews();
+				((Updatable) getSupportFragmentManager().findFragmentById(R.id.content_frame)).refreshDataInViews();
 			}
 			break;
 		default:

@@ -22,7 +22,6 @@ import java.util.concurrent.CancellationException;
 import com.google.api.client.auth.oauth2.Credential;
 import com.teambox.client.Application;
 import com.teambox.client.R;
-import com.teambox.client.Utilities;
 import com.teambox.client.oauth.OAuth;
 import com.teambox.client.oauth.OAuthTeamBox;
 
@@ -72,7 +71,7 @@ public class LoginActivity extends FragmentActivity {
 	
 	private void loadSessionScreen() {
 		finish();
-		startActivity(new Intent(this,MainActivity.class));
+		startActivity(new Intent(this,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
 	}
 
 	 
@@ -107,7 +106,7 @@ public class LoginActivity extends FragmentActivity {
 				loadSessionScreen();
 	    	}else
 	    	{
-	    		Utilities.deleteCookies(getApplicationContext());
+	    		Application.deleteCookies(getApplicationContext());
 	    	}
 	    }
 	}	

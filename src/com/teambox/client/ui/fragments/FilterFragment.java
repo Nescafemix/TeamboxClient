@@ -1,5 +1,6 @@
 package com.teambox.client.ui.fragments;
 
+import com.teambox.client.Application;
 import com.teambox.client.R;
 import com.teambox.client.Utilities;
 import com.teambox.client.db.AccountTable;
@@ -54,7 +55,7 @@ public class FilterFragment extends BaseFragment{
 		super.onActivityCreated(savedInstanceState);
 		
 		// Set radioGroup with value stores in SharedPreferences
-		int positionInRadioGroup = Utilities.getTaskStatusFilterSelectionInSharedPreferences(getActivity())-1;
+		int positionInRadioGroup = Application.getTaskStatusFilterSelection(getActivity())-1;
 		radioGroupFilter.check(radioGroupFilter.getChildAt(positionInRadioGroup).getId());
 		
 		if(!Utilities.isDeviceATablet(getActivity()));
@@ -70,7 +71,7 @@ public class FilterFragment extends BaseFragment{
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				int positionInRadioGroup = group.indexOfChild(group.findViewById(checkedId));
-				Utilities.setTaskStatusFilterSelectionInSharedPreferences(getActivity(),positionInRadioGroup+1);
+				Application.setTaskStatusFilterSelection(getActivity(),positionInRadioGroup+1);
 				
 			}
 		});
@@ -99,7 +100,7 @@ public class FilterFragment extends BaseFragment{
 	}
 
 	@Override
-	public void loadDataInViews() {
+	public void refreshDataInViews() {
 
 		
 	}

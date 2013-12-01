@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import com.teambox.client.Application;
 import com.teambox.client.R;
 import com.teambox.client.Utilities;
 import com.teambox.client.db.AccountTable;
@@ -26,7 +27,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ProfileFragment extends BaseFragment{
+public class ProfileSummaryFragment extends BaseFragment{
 
 	TextView textViewName;
 	TextView textViewEmail;
@@ -44,7 +45,7 @@ public class ProfileFragment extends BaseFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_profile, container, false);
+		View view = inflater.inflate(R.layout.fragment_profile_summary, container, false);
 		
 		textViewName = (TextView) view.findViewById(R.id.textViewName);
 		textViewEmail = (TextView) view.findViewById(R.id.textViewEmail);
@@ -55,8 +56,7 @@ public class ProfileFragment extends BaseFragment{
 			@Override
 			public void onClick(View v) {
 
-				Utilities.processLogout(getActivity(), getFragmentManager());
-				Utilities.returnToLoginScreen(getActivity().getApplicationContext());
+				Application.processLogout(getActivity(), getFragmentManager());
 			}
 		});
 		
@@ -69,7 +69,7 @@ public class ProfileFragment extends BaseFragment{
 		
 	    setupActionBar();
 		
-		loadDataInViews();
+		refreshDataInViews();
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class ProfileFragment extends BaseFragment{
 	}
 
 	@Override
-	public void loadDataInViews() {
+	public void refreshDataInViews() {
 
 		new LoadDataInViewsAsyncTask().execute();
 		

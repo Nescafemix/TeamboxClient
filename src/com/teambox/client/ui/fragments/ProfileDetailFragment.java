@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class DummyFragment extends BaseFragment{
+public class ProfileDetailFragment extends BaseFragment{
 
 
 	@Override
@@ -23,7 +23,7 @@ public class DummyFragment extends BaseFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_dummy, container, false);
+		View view = inflater.inflate(R.layout.fragment_profile_detail, container, false);
 		
 		
 		return view;
@@ -54,7 +54,7 @@ public class DummyFragment extends BaseFragment{
 
 	
 	@Override
-	public void loadDataInViews() {
+	public void refreshDataInViews() {
 
 		
 	}

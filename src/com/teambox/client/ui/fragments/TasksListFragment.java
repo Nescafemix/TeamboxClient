@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.teambox.client.Application;
 import com.teambox.client.R;
-import com.teambox.client.Utilities;
 import com.teambox.client.adapters.DropDrownProjectsListAdapter;
 import com.teambox.client.adapters.TaskAdapter;
 import com.teambox.client.db.ProjectTable;
@@ -39,7 +38,7 @@ public class TasksListFragment extends BaseListFragment {
 
 		projectIdToFilter = getArguments().getLong(ARG_PROJECT_FILTER);
 
-		taskAdapter = new TaskAdapter(getActivity(), R.layout.task_list_item, infoToLoad);
+		taskAdapter = new TaskAdapter(getActivity(), R.layout.list_item_task, infoToLoad);
 	    setListAdapter(taskAdapter);
 
 	    
@@ -71,9 +70,9 @@ public class TasksListFragment extends BaseListFragment {
 		sharedPreferences = getActivity().getSharedPreferences(Application.APP_STORE_PREF_FILE, Activity.MODE_PRIVATE); 
 	    onSharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 	    	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-	    		if(key.equalsIgnoreCase(Application.ARG_FILTER_TASK_STATUS))
+	    		if(key.equalsIgnoreCase(Application.FILTER_TASK_STATUS_KEY))
 	    		{
-	    			new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Utilities.getTaskStatusFilterValueInSharedPreferences(getActivity()));
+	    			new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Application.getTaskStatusFilterValue(getActivity()));
 	    		}
 	    	}
 
@@ -89,8 +88,8 @@ public class TasksListFragment extends BaseListFragment {
 
 	
 	@Override
-	public void loadDataInViews() {		
-	    new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Utilities.getTaskStatusFilterValueInSharedPreferences(getActivity()));
+	public void refreshDataInViews() {		
+	    new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Application.getTaskStatusFilterValue(getActivity()));
 	    new LoadDataInDropDownOfActionBarAsyncTask().execute();
 	}
 
@@ -208,7 +207,7 @@ public class TasksListFragment extends BaseListFragment {
 					if (isDropDownListLoaded())
 					{
 						projectIdToFilter = infoToLoadAtDropDownListOfActionBar.get(position).projectId;
-						new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Utilities.getTaskStatusFilterValueInSharedPreferences(getActivity()));
+						new LoadDataInListViewAsyncTask().execute(projectIdToFilter,Application.getTaskStatusFilterValue(getActivity()));
 					}
 				return true;
 			}

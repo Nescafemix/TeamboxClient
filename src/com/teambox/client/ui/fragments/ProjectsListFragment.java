@@ -24,12 +24,12 @@ public class ProjectsListFragment extends BaseListFragment{
     @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-	    projectAdapter = new ProjectAdapter(getActivity(), R.layout.project_list_item, infoToLoad);
+	    projectAdapter = new ProjectAdapter(getActivity(), R.layout.list_item_project, infoToLoad);
 	    setListAdapter(projectAdapter);
 
 	    setupActionBar();
 
-	    loadDataInViews();	    
+	    refreshDataInViews();	    
 
 	}    
 
@@ -48,7 +48,7 @@ public class ProjectsListFragment extends BaseListFragment{
 
 	
 	@Override
-	public void loadDataInViews() {		
+	public void refreshDataInViews() {		
 	    new LoadDataInListViewAsyncTask().execute();
 	}
 
