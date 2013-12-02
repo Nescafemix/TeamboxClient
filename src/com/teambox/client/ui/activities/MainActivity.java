@@ -39,9 +39,9 @@ import android.widget.ListView;
 
 import com.teambox.client.Application;
 import com.teambox.client.R;
-import com.teambox.client.Updatable;
 import com.teambox.client.Utilities;
 import com.teambox.client.services.UpdateDataIntentService;
+import com.teambox.client.ui.Updatable;
 import com.teambox.client.ui.fragments.FilterFragment;
 import com.teambox.client.ui.fragments.ProfileDetailFragment;
 import com.teambox.client.ui.fragments.ProfileSummaryFragment;

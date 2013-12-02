@@ -17,7 +17,7 @@ package com.teambox.client.ui.fragments;
 
 import android.support.v4.app.Fragment;
 
-import com.teambox.client.Updatable;
+import com.teambox.client.ui.Updatable;
 
 public abstract class BaseFragment extends Fragment implements Updatable {
 	protected static final String ARG_SECTION_NUMBER = "section_number";

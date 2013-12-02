@@ -19,7 +19,7 @@ import android.support.v4.app.ListFragment;
 import android.widget.BaseAdapter;
 
 import com.teambox.client.R;
-import com.teambox.client.Updatable;
+import com.teambox.client.ui.Updatable;
 
 public abstract class BaseListFragment extends ListFragment implements
 		Updatable {

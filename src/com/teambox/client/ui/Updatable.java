@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.teambox.client;
+package com.teambox.client.ui;
 
 /**
  * This interface should be implemented in classes with sensitive displayed data
