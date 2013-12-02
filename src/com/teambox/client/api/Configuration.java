@@ -19,16 +19,23 @@ package com.teambox.client.api;
 import java.util.Arrays;
 import java.util.List;
 
-public class ServiceInfo {
+/**
+ * This class contains constants with the information needed to use Teambox API.
+ * 
+ * @author Joan Fuentes
+ * 
+ */
+public class Configuration {
 
-	public static final String CLIENT_ID="MDfMUJAJCH7wCR4LTnEmIGbVh8o7r9q3FS4AfUTQ";
-	public static final String CLIENT_SECRET="C34LuKYGyblsWcOCstpZzhYRuOCUtopRwjHCgv5G";
-	
-	public static final String TOKEN_REQUEST_URL="https://teambox.com/oauth/token";
-	public static final String AUTHORIZATION_REQUEST_URL="https://teambox.com/oauth/authorize";
+	public static final String CLIENT_ID = "MDfMUJAJCH7wCR4LTnEmIGbVh8o7r9q3FS4AfUTQ";
+	public static final String CLIENT_SECRET = "C34LuKYGyblsWcOCstpZzhYRuOCUtopRwjHCgv5G";
 
-	public static final String REDIRECT_URL="http://www.teamboxunofficial.com/auth";
-	public static final List<String> SCOPES= Arrays.asList("read_projects", "write_projects");
+	public static final String TOKEN_REQUEST_URL = "https://teambox.com/oauth/token";
+	public static final String AUTHORIZATION_REQUEST_URL = "https://teambox.com/oauth/authorize";
+
+	public static final String REDIRECT_URL = "http://www.teamboxunofficial.com/auth";
+	public static final List<String> SCOPES = Arrays.asList("read_projects",
+			"write_projects");
 
 	public static final String API_URL = "https://www.teambox.com/api/2";
 }

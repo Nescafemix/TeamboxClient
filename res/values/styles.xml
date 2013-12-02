@@ -16,11 +16,12 @@
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Actionbar</item>
     </style>
     
-    <!-- Application theme. -->
+    
+    <!-- 
+    	Application theme.
+    -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <!-- <item name="android:activatedBackgroundIndicator">@drawable/activated_background_indicator</item> -->
-        
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->        
     </style>
 
     <!--
@@ -94,6 +95,7 @@
     <!--
         Text styles
     -->
+    
 	<style name="Text_activity_login_unofficial" parent="@android:style/TextAppearance.Large">
 	    <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
 	    <item name="android:textColor">@color/text_activity_login_unofficial</item>
@@ -150,14 +152,17 @@
     <!--
         Button styles
     -->
+    
     <style name="Button.Base" parent="@android:style/Widget.Holo.Light.Button">
 	</style>
-    
     
 	<style name="Button_login" parent="@style/Button.Base">
 	    <item name="android:textSize">24sp</item>
 	    <item name="android:paddingRight">50dp</item>
 	    <item name="android:paddingLeft">50dp</item>
+	</style>
+	
+	<style name="Button_logout" parent="@style/Button.Base">
 	</style>
 
 	<style name="Button_tasks_counter_new" parent="@android:style/Widget.Holo.Light.Button.Small">

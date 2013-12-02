@@ -21,26 +21,50 @@ import java.util.List;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
-
+/**
+ * Interface used by Retrofit to recognize requests (GET, POST, ...) and know to
+ * which object should parse the resulting JSON.
+ * 
+ * @author Joan Fuentes
+ * 
+ */
 public interface TeamBoxInterface {
 
-	
+	/**
+	 * Download and parse the account info in a Account object
+	 * 
+	 * @param token
+	 *            OAuth access token
+	 * @return
+	 */
 	@GET("/account")
-	Account account(
-			@Query("access_token") String token
-			);
+	Account account(@Query("access_token") String token);
 
+	/**
+	 * Download and parse the projects info in a list of Project objects
+	 * 
+	 * @param token
+	 *            OAuth access token
+	 * @return
+	 */
 	@GET("/projects")
-	List<Project> projects(
-			@Query("access_token") String token
-			);
+	List<Project> projects(@Query("access_token") String token);
 
+	/**
+	 * Download and parse the tasks info in a list of Task objects
+	 * 
+	 * @param token
+	 *            OAuth access token
+	 * @param scope
+	 *            Used to filter tasks by status. Must be one of: all, active,
+	 *            archived, unarchived, due_today, overdue, unassigned_date,
+	 *            urgent, upcoming, with_date.
+	 * @param count
+	 *            Number of tasks to retrieve. 0 means all matched.
+	 * @return
+	 */
 	@GET("/tasks")
-	List<Task> tasks(
-			@Query("access_token") String token,
-			@Query("scope") String scope,
-			@Query("count") String count // Count 0 means all matched 
-			);
-
+	List<Task> tasks(@Query("access_token") String token,
+			@Query("scope") String scope, @Query("count") String count);
 
 }

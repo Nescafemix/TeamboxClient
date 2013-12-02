@@ -15,28 +15,28 @@
  */
 package com.teambox.client.ui.fragments;
 
-import com.teambox.client.R;
-import com.teambox.client.Updatable;
-
 import android.support.v4.app.ListFragment;
 import android.widget.BaseAdapter;
 
-/**
- * @author Joan Fuentes
- *
- */
-public abstract class BaseListFragment extends ListFragment implements Updatable{
-    protected static final String ARG_SECTION_NUMBER = "section_number";
-	
-	final public void notifyDataSetChangedToAdapter()  {
-	    getActivity().runOnUiThread(new Runnable()  {
-	        public void run() {
-	            if(getListAdapter() != null) {
-	    			BaseListFragment fragment = (BaseListFragment) getFragmentManager().findFragmentById(R.id.content_frame);
-	    		    ((BaseAdapter) fragment.getListAdapter()).notifyDataSetChanged();
-	             }
-	        }
-	    });
+import com.teambox.client.R;
+import com.teambox.client.Updatable;
+
+public abstract class BaseListFragment extends ListFragment implements
+		Updatable {
+	protected static final String ARG_SECTION_NUMBER = "section_number";
+	protected static final String ARG_PROJECT_FILTER = "project_filter_id";
+
+	final public void notifyDataSetChangedToAdapter() {
+		getActivity().runOnUiThread(new Runnable() {
+			public void run() {
+				if (getListAdapter() != null) {
+					BaseListFragment fragment = (BaseListFragment) getFragmentManager()
+							.findFragmentById(R.id.content_frame);
+					((BaseAdapter) fragment.getListAdapter())
+							.notifyDataSetChanged();
+				}
+			}
+		});
 	}
 
 }

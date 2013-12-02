@@ -1,17 +1,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Layout_lateral_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FilterFragment" 
-    style="@style/Layout_lateral_fragment">
+    tools:context=".FilterFragment" >
 
-	<TextView
+    <TextView
         android:id="@+id/textViewProjectsSummaryTitle"
+        style="@style/Text_fragment_lateral_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_projects_summary_title"
-		style="@style/Text_fragment_lateral_title"/>
-    
+        android:text="@string/fragment_projects_summary_title" />
+
+    <ImageView
+        android:id="@+id/imageViewUnderConstruction"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:src="@drawable/logo_under_construction" />
 
 </LinearLayout>

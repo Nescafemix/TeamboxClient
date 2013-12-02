@@ -24,76 +24,81 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import com.teambox.client.db.ProjectTable;
+import com.teambox.client.R;
+import com.teambox.client.db.TaskTable;
 
 /**
- * ListAdapter used to adapter a list of projects in a dropdown element
+ * ListAdapter used to adapter a list of tasks in a listView element
  * 
  * @author Joan Fuentes
  * 
  */
-public class DropDrownProjectsListAdapter extends BaseAdapter implements
-		SpinnerAdapter {
+public class TaskListAdapter extends BaseAdapter {
 
-	private List<ProjectTable> mProjects;
+	private List<TaskTable> mTasks;
 	private int mLayoutResourceId;
 	private Context mContext;
 
-	public DropDrownProjectsListAdapter(Context context, int layoutResourceId,
-			List<ProjectTable> projects) {
+	public TaskListAdapter(Context context, int layoutResourceId,
+			List<TaskTable> tasks) {
 		this.mContext = context;
 		this.mLayoutResourceId = layoutResourceId;
-		this.mProjects = projects;
+		this.mTasks = tasks;
 	}
 
 	public int getCount() {
-		return mProjects.size();
+		return mTasks.size();
 	}
 
 	public Object getItem(int position) {
-		return mProjects.get(position);
+		return mTasks.get(position);
 	}
 
 	public long getItemId(int position) {
 		return position;
 	}
 
-	@Override
-	public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-		View row = inflater.inflate(
-				android.R.layout.simple_spinner_dropdown_item, parent, false);
-		((TextView) row).setText(mProjects.get(position).name);
-
-		return row;
-	}
-
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
 		TaskHolder holder = null;
-		final ProjectTable project = mProjects.get(position);
+		final TaskTable task = mTasks.get(position);
 
 		if (row == null) {
 			LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
 			row = inflater.inflate(mLayoutResourceId, parent, false);
 
 			holder = new TaskHolder();
-			holder.name = (TextView) row;
+			holder.name = (TextView) row.findViewById(R.id.textViewTaskName);
+			holder.commentsCount = (TextView) row
+					.findViewById(R.id.textViewTaskCommentsCount);
+			holder.commentsCountTitle = (TextView) row
+					.findViewById(R.id.textViewTaskCommentsCountTitle);
+
 			row.setTag(holder);
 		} else {
 			holder = (TaskHolder) row.getTag();
 		}
 
-		if (project.name != null) {
-			holder.name.setText(project.name);
-		}
+		setValuesInViews(holder, task);
+
 		return row;
+	}
+
+	private void setValuesInViews(TaskHolder holder, TaskTable task) {
+		holder.name.setText(task.name);
+		holder.commentsCount.setText(String.valueOf(task.commentsCount));
+		holder.commentsCountTitle
+				.setText((task.commentsCount > 1 ? mContext
+						.getString(R.string.fragment_task_list_textview_task_list_comments_count_title_plural)
+						: mContext
+								.getString(R.string.fragment_task_list_textview_task_list_comments_count_title_singular)));
 	}
 
 	static class TaskHolder {
 		TextView name;
+		TextView commentsCount;
+		TextView commentsCountTitle;
 	}
 }

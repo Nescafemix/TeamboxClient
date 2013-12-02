@@ -21,8 +21,15 @@ import android.content.Context;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-public class ProjectTable extends SugarRecord<ProjectTable>{
-	
+/**
+ * Persistent entity that would automatically map to a table named ProjectTable
+ * using SugarORM.
+ * 
+ * @author Joan Fuentes
+ * 
+ */
+public class ProjectTable extends SugarRecord<ProjectTable> {
+
 	public String type;
 	public String createdAt;
 	public String updatedAt;
@@ -33,43 +40,54 @@ public class ProjectTable extends SugarRecord<ProjectTable>{
 	public String name;
 	public boolean tracksTime;
 	public boolean publishPages;
-	
-	@Ignore
-	public int tasksCountNew; // It won't be persisted, neither will a corresponding column be created for this property
-	@Ignore
-	public int tasksCountOpen; // It won't be persisted, neither will a corresponding column be created for this property
-	@Ignore
-	public int tasksCountHold; // It won't be persisted, neither will a corresponding column be created for this property
-	@Ignore
-	public int tasksCountResolved; // It won't be persisted, neither will a corresponding column be created for this property
-	@Ignore
-	public int tasksCountRejected; // It won't be persisted, neither will a corresponding column be created for this property
 
-	public ProjectTable(Context context){
+	@Ignore
+	public int tasksCountNew; // It won't be persisted, neither will a
+								// corresponding column be created for this
+								// property
+	@Ignore
+	public int tasksCountOpen; // It won't be persisted, neither will a
+								// corresponding column be created for this
+								// property
+	@Ignore
+	public int tasksCountHold; // It won't be persisted, neither will a
+								// corresponding column be created for this
+								// property
+	@Ignore
+	public int tasksCountResolved; // It won't be persisted, neither will a
+									// corresponding column be created for this
+									// property
+	@Ignore
+	public int tasksCountRejected; // It won't be persisted, neither will a
+									// corresponding column be created for this
+									// property
+
+	public ProjectTable(Context context) {
 		super(context);
 	}
 
-
-	public ProjectTable(Context context, String type, String createdAt, String updatedAt, long projectId, String permalink, long organizationId, boolean archived, String name, boolean tracksTime, boolean publishPages){
+	public ProjectTable(Context context, long projectId, String name) {
 		super(context);
-	    this.type = type;
-	    this.createdAt = createdAt;
-	    this.updatedAt = updatedAt;
-	    this.projectId = projectId;
-	    this.permalink = permalink;
-	    this.organizationId = organizationId;
-	    this.archived = archived;
-	    this.name = name;
-	    this.tracksTime = tracksTime;
-	    this.publishPages = publishPages;
-	    
-	  }
-
-	public ProjectTable(Context context,long projectId, String name){
-		super(context);
-	    this.projectId = projectId;
-	    this.name = name;
+		this.projectId = projectId;
+		this.name = name;
 	}
 
-	
+	public ProjectTable(Context context, String type, String createdAt,
+			String updatedAt, long projectId, String permalink,
+			long organizationId, boolean archived, String name,
+			boolean tracksTime, boolean publishPages) {
+		super(context);
+		this.type = type;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.projectId = projectId;
+		this.permalink = permalink;
+		this.organizationId = organizationId;
+		this.archived = archived;
+		this.name = name;
+		this.tracksTime = tracksTime;
+		this.publishPages = publishPages;
+
+	}
+
 }

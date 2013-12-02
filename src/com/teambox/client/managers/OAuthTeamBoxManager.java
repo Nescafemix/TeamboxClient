@@ -14,27 +14,32 @@
  * limitations under the License.
  */
 
-package com.teambox.client.oauth;
+package com.teambox.client.managers;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import com.google.api.client.auth.oauth2.ClientParametersAuthentication;
-import com.teambox.client.api.ServiceInfo;
+import com.teambox.client.api.Configuration;
 
-public class OAuthTeamBox{
+/**
+ * Manager OAuth for Teambox API. It is used to manage the OAuth request to
+ * Teambox services.
+ * 
+ * @author Joan Fuentes
+ * 
+ */
+public class OAuthTeamBoxManager {
 
-    public static OAuth newInstance(Context context,
-            FragmentManager fragmentManager) {
-   
-    	return OAuth.newInstance(context, 
-    			fragmentManager, 
-    			new ClientParametersAuthentication(ServiceInfo.CLIENT_ID, ServiceInfo.CLIENT_SECRET), 
-    			ServiceInfo.AUTHORIZATION_REQUEST_URL, 
-    			ServiceInfo.TOKEN_REQUEST_URL, 
-    			ServiceInfo.REDIRECT_URL, 
-    			ServiceInfo.SCOPES);
-    	
- 
-    }
+	public static OAuthGlobalManager newInstance(Context context,
+			FragmentManager fragmentManager) {
+
+		return OAuthGlobalManager.newInstance(context, fragmentManager,
+				new ClientParametersAuthentication(Configuration.CLIENT_ID,
+						Configuration.CLIENT_SECRET),
+				Configuration.AUTHORIZATION_REQUEST_URL,
+				Configuration.TOKEN_REQUEST_URL, Configuration.REDIRECT_URL,
+				Configuration.SCOPES);
+
+	}
 }

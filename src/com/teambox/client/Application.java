@@ -13,14 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.teambox.client;
 
-import com.teambox.client.db.AccountTable;
-import com.teambox.client.db.ProjectTable;
-import com.teambox.client.db.TaskTable;
-import com.teambox.client.oauth.OAuth;
-import com.teambox.client.oauth.OAuthTeamBox;
-import com.teambox.client.ui.activities.LoginActivity;
+package com.teambox.client;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +22,13 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+
+import com.teambox.client.db.AccountTable;
+import com.teambox.client.db.ProjectTable;
+import com.teambox.client.db.TaskTable;
+import com.teambox.client.managers.OAuthGlobalManager;
+import com.teambox.client.managers.OAuthTeamBoxManager;
+import com.teambox.client.ui.activities.LoginActivity;
 
 public class Application extends android.app.Application {
 	private static Application application = null;
@@ -37,6 +38,12 @@ public class Application extends android.app.Application {
 
 	public static final String TOKEN_PREF_KEY = "oauth_token";
 	public static final String FILTER_TASK_STATUS_KEY = "filter_task_status";
+
+	public static final int FRAGMENT_PROJECTS = 0;
+	public static final int FRAGMENT_TASKS = 1;
+	public static final int FRAGMENT_PROFILE = 2;
+	public static final int FRAGMENT_FILTER = 3;
+	public static final int FRAGMENT_ABOUT_US = 7;
 
 	/**
 	 * Delete Cookies
@@ -80,7 +87,8 @@ public class Application extends android.app.Application {
 	 */
 	private static void deleteOAuthCredential(Context context,
 			FragmentManager fragmentManager) {
-		OAuth oAuth = OAuthTeamBox.newInstance(context, fragmentManager);
+		OAuthGlobalManager oAuth = OAuthTeamBoxManager.newInstance(context,
+				fragmentManager);
 		oAuth.deleteCredential("userId");
 	}
 
@@ -171,6 +179,22 @@ public class Application extends android.app.Application {
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
+	}
+
+	/**
+	 * Set the OAuth access token in SharedPreferences
+	 * 
+	 * @param context
+	 * @param token
+	 *            Access token
+	 */
+	public static void setOAuthAccessToken(Context context, String token) {
+		SharedPreferences preferences = context.getSharedPreferences(
+				APP_STORE_PREF_FILE, MODE_PRIVATE);
+		SharedPreferences.Editor editor = preferences.edit();
+
+		editor.putString(TOKEN_PREF_KEY, token);
+		editor.commit();
 	}
 
 	/**

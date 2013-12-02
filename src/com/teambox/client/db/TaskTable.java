@@ -20,8 +20,15 @@ import android.content.Context;
 
 import com.orm.SugarRecord;
 
-public class TaskTable extends SugarRecord<TaskTable>{
-	
+/**
+ * Persistent entity that would automatically map to a table named TaskTable
+ * using SugarORM.
+ * 
+ * @author Joan Fuentes
+ * 
+ */
+public class TaskTable extends SugarRecord<TaskTable> {
+
 	public String type;
 	public String createdAt;
 	public String updatedAt;
@@ -40,15 +47,19 @@ public class TaskTable extends SugarRecord<TaskTable>{
 	public long lastActivityId;
 	public boolean deleted;
 	public String dueOn;
-	
-	public TaskTable(Context context){
+
+	public TaskTable(Context context) {
 		super(context);
 	}
-	
-	
-	public TaskTable(Context context,String type,String createdAt,String updatedAt,long id,String name,long taskListId,int commentsCount,long assignedId,int status,boolean isPrivate,long projectId,boolean urgent,int hiddenCommentsCount,long user_id,int position,long lastActivityId,boolean deleted,String dueOn){
+
+	public TaskTable(Context context, String type, String createdAt,
+			String updatedAt, long id, String name, long taskListId,
+			int commentsCount, long assignedId, int status, boolean isPrivate,
+			long projectId, boolean urgent, int hiddenCommentsCount,
+			long user_id, int position, long lastActivityId, boolean deleted,
+			String dueOn) {
 		super(context);
-		
+
 		this.type = type;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -68,5 +79,5 @@ public class TaskTable extends SugarRecord<TaskTable>{
 		this.lastActivityId = lastActivityId;
 		this.dueOn = dueOn;
 	}
-	
+
 }

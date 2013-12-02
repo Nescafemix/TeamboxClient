@@ -1,24 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TeamBox Client</string>
+    <!-- 
+    	General purpose 
+    -->
+    
+    <string name="app_name">Unofficial TeamBox Client</string>
+
+    
+    <!-- 
+    	Drawer 
+    -->
+    
     <string name="drawer_open">Open side bar</string>
     <string name="drawer_close">Close side bar</string>
-    <string name="action_logout">Log out</string>
-    <string name="action_refresh">Update</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_filter_tasks_by_status">Filter tasks by status</string>
     
-    <string name="item_image">Item image</string>
+    
+    <!-- 
+    	Actionbar & Menus
+    -->
+    
+    <string name="action_refresh">Update</string>
+    <string name="action_filter_tasks_by_status">Filter tasks by status</string>
     <string name="dropdown_list_all_projects_element">All projects</string>
-    <string name="service_update_data_error">Error updating</string>
+
+    
+    <!--
+    	Services
+    -->
+    
+    <string name="service_update_data_error_account">Error updating account info</string>
+    <string name="service_update_data_error_projects">Error updating projects info</string>
+    <string name="service_update_data_error_tasks">Error updating tasks info</string>
+    <string name="service_update_data_completed">Update successfully</string>
+    <string name="service_update_data_completed_with_error">Update incomplete. Try again later.</string>
+    
+    
+    <!-- 
+    	Activities
+    -->
+    
     <string name="activity_login_button_login">LOGIN</string>
     <string name="activity_login_textview_unofficial">the unofficial App</string>
+
+    
+	<!--
+		Fragments
+	-->
+    
     <string name="fragment_task_list_textview_task_list_comments_count_title_singular">comment</string>
     <string name="fragment_task_list_textview_task_list_comments_count_title_plural">comments</string>
     <string name="fragment_profile_summary_logout">Log out</string>
     <string name="fragment_profile_detail_title">Profile detail:</string>
     <string name="fragment_tasks_filter_by_status_title">Tasks filter by status:</string>
-    <string name="fragment_projects_summary_title">Summary:</string>
+    <string name="fragment_projects_summary_title">Summary:</string>    
     
 </resources>

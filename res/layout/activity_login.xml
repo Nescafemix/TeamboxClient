@@ -10,12 +10,12 @@
 
     <Button
         android:id="@+id/buttonLogin"
+        style="@style/Button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/activity_login_button_login" 
-        style="@style/Button_login"/>
+        android:text="@string/activity_login_button_login" />
 
     <ImageView
         android:id="@+id/imageViewLogoImage"
@@ -37,11 +37,11 @@
 
     <TextView
         android:id="@+id/textViewUnofficial"
+        style="@style/Text_activity_login_unofficial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageViewLogoText"
         android:layout_centerHorizontal="true"
-        android:text="@string/activity_login_textview_unofficial"
-        style="@style/Text_activity_login_unofficial" />
-    
+        android:text="@string/activity_login_textview_unofficial" />
+
 </RelativeLayout>

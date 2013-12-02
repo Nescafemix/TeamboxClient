@@ -16,8 +16,16 @@
 
 package com.teambox.client.api;
 
+/**
+ * Object which define the task info downloaded from Teambox with their API.
+ * This class is used by Retrofit to define the destiny type of a parsed JSON
+ * file.
+ * 
+ * @author Joan Fuentes
+ * 
+ */
 public class Task {
-	
+
 	public String type;
 	public String created_at;
 	public String updated_at;
@@ -25,7 +33,7 @@ public class Task {
 	public String name;
 	public long task_list_id;
 	public int comments_count;
-	public long assigned_id; //
+	public long assigned_id;
 	public int status;
 	public boolean is_private;
 	public long project_id;
@@ -34,13 +42,13 @@ public class Task {
 	public long user_id;
 	public int position;
 	public long last_activity_id;
-	public String record_conversion_type; //
-	public int record_conversion_id; //
+	public String record_conversion_type;
+	public int record_conversion_id;
 	public Object metadata;
 	public int[] watcher_ids;
 	public boolean deleted;
 	public String due_on;
 	public Object first_comment;
 	public Object recent_comments;
-	
+
 }

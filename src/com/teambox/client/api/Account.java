@@ -16,13 +16,16 @@
 
 package com.teambox.client.api;
 
-
 /**
+ * Object which define the account info downloaded from Teambox with their API.
+ * This class is used by Retrofit to define the destiny type of a parsed JSON
+ * file.
+ * 
  * @author Joan Fuentes
- *
+ * 
  */
 public class Account {
-	
+
 	public String type;
 	public String created_at;
 	public String updated_at;
@@ -60,7 +63,5 @@ public class Account {
 	public String profile_avatar_url;
 	public boolean has_crypted_password;
 	public Object card;
-	
-	
-	
+
 }

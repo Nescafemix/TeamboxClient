@@ -1,10 +1,20 @@
 <resources>
+
+    <!-- 
+    	Drawer
+    -->
+    
     <string-array name="flyout_array">
         <item>Projects</item>
         <item>Tasks</item>
         <item>Profile</item>
 	</string-array>
 
+    
+    <!-- 
+    	Fragments
+    -->
+    
     <string-array name="task_status_names_array">
         <item>All</item>
         <item>New</item>

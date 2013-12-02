@@ -10,12 +10,12 @@
 
     <Button
         android:id="@+id/buttonLogin"
+        style="@style/Button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/activity_login_button_login" 
-        style="@style/Button_login"/>
+        android:text="@string/activity_login_button_login" />
 
     <ImageView
         android:id="@+id/imageViewLogoImage"
@@ -31,24 +31,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageViewLogoImage"
-        android:layout_toRightOf="@+id/imageViewLogoImage"
         android:layout_marginLeft="12dp"
+        android:layout_toRightOf="@+id/imageViewLogoImage"
         android:adjustViewBounds="true"
-        android:src="@drawable/logo_teambox_text_big" 
-/>
+        android:src="@drawable/logo_teambox_text_big" />
 
     <TextView
         android:id="@+id/textViewUnofficial"
         style="@style/Text_activity_login_unofficial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imageViewLogoImage"
-        android:layout_marginTop="50dp"
         android:layout_below="@+id/imageViewLogoText"
-        
-        
         android:layout_marginLeft="24dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@+id/imageViewLogoImage"
         android:gravity="bottom"
         android:text="@string/activity_login_textview_unofficial" />
-    
+
 </RelativeLayout>

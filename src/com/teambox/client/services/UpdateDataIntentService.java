@@ -17,16 +17,22 @@
 package com.teambox.client.services;
 
 import retrofit.RetrofitError;
-
-import com.teambox.client.Application;
-import com.teambox.client.R;
-import com.teambox.client.managers.UpdateTeamBoxDataManager;
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
-public class UpdateDataIntentService extends IntentService{
+import com.teambox.client.Application;
+import com.teambox.client.R;
+import com.teambox.client.managers.DownloadDataManager;
+
+/**
+ * IntentService that launches the data update process and broadcast the result
+ * with a LocalBroadcast
+ * 
+ * @author Joan Fuentes
+ * 
+ */
+public class UpdateDataIntentService extends IntentService {
 
 	public static final String NOTIFICATION_UPDATE_STATUS = "com.teambox.client.service.update_status_receiver";
 
@@ -36,41 +42,69 @@ public class UpdateDataIntentService extends IntentService{
 
 	public static final int STATUS_DOWNLOADING = 1;
 	public static final int STATUS_COMPLETED = 2;
+	public static final int STATUS_COMPLETED_WITH_ERRORS = 3;
 
 	public static final int TYPE_UPLOAD_STATUS_CHANGE = 1;
 	public static final int TYPE_ERROR_ALERT = 2;
 
-	
 	public UpdateDataIntentService() {
 		super("UpdateDataService");
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		
-		UpdateTeamBoxDataManager updateManager = new UpdateTeamBoxDataManager(getApplicationContext(),Application.getOAuthAccessToken(getApplicationContext()));
-		
+		boolean success = Boolean.TRUE;
+
+		DownloadDataManager updateManager = new DownloadDataManager(
+				getApplicationContext(),
+				Application.getOAuthAccessToken(getApplicationContext()));
+
 		try {
 			updateManager.updateAccount();
 		} catch (RetrofitError e) {
-			alertError(getString(R.string.service_update_data_error) + " ACCOUNT");
+			success = Boolean.FALSE;
+			publishErrorAlert(getString(R.string.service_update_data_error_account));
 		}
 
 		try {
 			updateManager.updateProjects();
 		} catch (Exception e) {
-			alertError(getString(R.string.service_update_data_error) + " PROJECTS");
+			success = Boolean.FALSE;
+			publishErrorAlert(getString(R.string.service_update_data_error_projects));
 		}
 
 		try {
 			updateManager.updateTasks();
 		} catch (Exception e) {
-			alertError(getString(R.string.service_update_data_error) + " TASKS");
+			success = Boolean.FALSE;
+			publishErrorAlert(getString(R.string.service_update_data_error_tasks));
 		}
 
-		publishUpdateCompleted();
+		if (success) {
+			publishUpdateCompleted();
+		} else {
+			publishUpdateCompletedWithErrors();
+		}
 	}
 
+	/**
+	 * Send a local broadcast to inform about an specific error in the update
+	 * process.
+	 * 
+	 * @param message
+	 */
+	private void publishErrorAlert(String message) {
+		Intent intent = new Intent(NOTIFICATION_UPDATE_STATUS);
+		intent.putExtra(EXTRA_BROADCAST_TYPE, TYPE_ERROR_ALERT);
+		intent.putExtra(EXTRA_ERROR_MESSAGE, message);
+
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+	}
+
+	/**
+	 * Send a local broadcast to inform about an update successfully.
+	 */
 	private void publishUpdateCompleted() {
 		Intent intent = new Intent(NOTIFICATION_UPDATE_STATUS);
 		intent.putExtra(EXTRA_BROADCAST_TYPE, TYPE_UPLOAD_STATUS_CHANGE);
@@ -79,13 +113,16 @@ public class UpdateDataIntentService extends IntentService{
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
-	private void alertError(String message) {
+	/**
+	 * Send a local broadcast to inform about an update unsuccessfully. It
+	 * contained errors.
+	 */
+	private void publishUpdateCompletedWithErrors() {
 		Intent intent = new Intent(NOTIFICATION_UPDATE_STATUS);
-		intent.putExtra(EXTRA_BROADCAST_TYPE, TYPE_ERROR_ALERT);
-		intent.putExtra(EXTRA_ERROR_MESSAGE, message);
-		
-		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+		intent.putExtra(EXTRA_BROADCAST_TYPE, TYPE_UPLOAD_STATUS_CHANGE);
+		intent.putExtra(EXTRA_UPDATE_STATUS, STATUS_COMPLETED_WITH_ERRORS);
 
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
 }

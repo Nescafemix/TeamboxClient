@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Layout_task_list_item"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/Layout_task_list_item">
+    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/textViewTaskCommentsCount"
+        style="@style/Text_fragment_task_list_comments_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textViewTaskName"
         android:layout_toLeftOf="@+id/textViewTaskCommentsCountTitle"
-        android:text="@null"
-		style="@style/Text_fragment_task_list_comments_count"/>
-    
-   	<TextView
+        android:text="@null" />
+
+    <TextView
         android:id="@+id/textViewTaskCommentsCountTitle"
+        style="@style/Text_fragment_task_list_comments_count_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textViewTaskName"
         android:layout_alignRight="@+id/textViewTaskName"
-        android:text="@null"
- 		style="@style/Text_fragment_task_list_comments_count_title"/>
-    
+        android:text="@null" />
+
     <TextView
         android:id="@+id/textViewTaskName"
+        style="@style/Text_fragment_task_list_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:lines="2"
-        android:text="@null"
-		style="@style/Text_fragment_task_list_name"/>
+        android:text="@null" />
 
 </RelativeLayout>

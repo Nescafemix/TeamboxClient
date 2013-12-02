@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.teambox.client.db;
 
 import android.content.Context;
@@ -20,10 +21,13 @@ import android.content.Context;
 import com.orm.SugarRecord;
 
 /**
+ * Persistent entity that would automatically map to a table named AccountTable
+ * using SugarORM.
+ * 
  * @author Joan Fuentes
- *
+ * 
  */
-public class AccountTable extends SugarRecord<AccountTable>{
+public class AccountTable extends SugarRecord<AccountTable> {
 	public int accountId;
 	public String firstName;
 	public String lastName;
@@ -33,28 +37,31 @@ public class AccountTable extends SugarRecord<AccountTable>{
 	public String profileAvatarUrlCached;
 	public String profileAvatarUrlLocalFile;
 
-	public AccountTable(Context context){
+	public AccountTable(Context context) {
 		super(context);
 	}
 
-	public AccountTable(Context context, int accountId, String firstName, String lastName, String email, String username, String profileAvatarUrl){
+	public AccountTable(Context context, int accountId, String firstName,
+			String lastName, String email, String username,
+			String profileAvatarUrl) {
 		super(context);
-	    this.accountId = accountId;
-	    this.firstName = firstName;
-	    this.lastName = lastName;
-	    this.email = email;
-	    this.username = username;
-	    this.profileAvatarUrl = profileAvatarUrl;
-	    
-	  }
-	
-	public void update(int accountId, String firstName, String lastName, String email, String username, String profileAvatarUrl){
-	    this.accountId = accountId;
-	    this.firstName = firstName;
-	    this.lastName = lastName;
-	    this.email = email;
-	    this.username = username;
-	    this.profileAvatarUrl = profileAvatarUrl;
-	  }
+		this.accountId = accountId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = username;
+		this.profileAvatarUrl = profileAvatarUrl;
+
+	}
+
+	public void update(int accountId, String firstName, String lastName,
+			String email, String username, String profileAvatarUrl) {
+		this.accountId = accountId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = username;
+		this.profileAvatarUrl = profileAvatarUrl;
+	}
 
 }
