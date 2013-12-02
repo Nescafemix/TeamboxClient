@@ -12,3 +12,8 @@ Other libreries used in this project (they are included as .jar inside the proje
   * <a href="http://satyan.github.io/sugar/index.html">Sugar ORM</a>
   * <a href="http://square.github.io/retrofit/">Retrofit - A type-safe REST client for Android and Java</a>
   * <a href="http://code.google.com/p/google-oauth-java-client/">Google OAuth Client Library for Java</a>
+
+
+License
+========
+http://www.apache.org/licenses/LICENSE-2.0.html
