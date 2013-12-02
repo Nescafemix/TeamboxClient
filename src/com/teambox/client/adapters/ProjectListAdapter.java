@@ -107,7 +107,7 @@ public class ProjectListAdapter extends BaseAdapter {
 		holder.tasksCountResolved.setOnClickListener(getOnClickListener(
 				project, 5));
 		holder.tasksCountRejected.setOnClickListener(getOnClickListener(
-				project, 5));
+				project, 6));
 	}
 
 	private void setValuesInViews(TaskHolder holder, ProjectTable project) {

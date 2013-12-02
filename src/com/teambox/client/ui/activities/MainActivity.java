@@ -305,9 +305,9 @@ public class MainActivity extends ActionBarActivity {
 		case R.id.action_refresh:
 			launchUpdateProcess();
 			return true;
-		case R.id.action_filter_tasks_by_status:
-			openFilterScreen();
-			return true;
+//		case R.id.action_filter_tasks_by_status:
+//			openFilterScreen();
+//			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -357,12 +357,6 @@ public class MainActivity extends ActionBarActivity {
 
 	}
 
-	private void openFilterScreen() {
-		Fragment fragment = new FilterFragment();
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction().addToBackStack(null)
-				.replace(R.id.content_frame, fragment).commit();
-	}
 
 	private void refreshDataInFragments() {
 		if (Utilities.isDeviceATablet(this)) {

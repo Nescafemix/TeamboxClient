@@ -5,7 +5,8 @@
         android:id="@+id/action_filter_tasks_by_status"
         android:orderInCategory="200"
         android:showAsAction="never"
-        android:title="@string/action_filter_tasks_by_status"/>
+        android:title="@string/action_filter_tasks_by_status"
+        android:visible="false"/>
     
 	<item android:id="@+id/action_refresh"
 		android:icon="@drawable/ic_action_refresh"

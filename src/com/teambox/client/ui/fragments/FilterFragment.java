@@ -1,6 +1,8 @@
 package com.teambox.client.ui.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +26,18 @@ import com.teambox.client.ui.activities.MainActivity;
 public class FilterFragment extends BaseFragment {
 
 	RadioGroup mRadioGroupFilter;
+	long mProjectIdToFilter;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+		if (getArguments() != null) {
+			if (!Utilities.isDeviceATablet(getActivity())) {
+				mProjectIdToFilter = getArguments().getLong(ARG_PROJECT_FILTER,
+						0);
+			}
+		}
 
 		// Set radioGroup with value stores in SharedPreferences
 		int positionInRadioGroup = Application
@@ -102,8 +112,22 @@ public class FilterFragment extends BaseFragment {
 
 						// If it is a mobile, this fragment is charged at full
 						// screen. Return to the previous screen
+						// with getFragmentManager().popBackStack() we could
+						// reload the previous fragment (if it was saved in
+						// stack)
+						// but me are going to create a new fragment with same
+						// values to avoid "flick effect";
 						if (!Utilities.isDeviceATablet(getActivity())) {
-							getFragmentManager().popBackStack();
+							Fragment fragment = new TasksListFragment();
+							FragmentManager fragmentManager = getActivity()
+									.getSupportFragmentManager();
+							Bundle bundle = new Bundle();
+							bundle.putLong(ARG_PROJECT_FILTER,
+									mProjectIdToFilter);
+							fragment.setArguments(bundle);
+							fragmentManager.beginTransaction()
+									.replace(R.id.content_frame, fragment)
+									.commit();
 						}
 					}
 				});

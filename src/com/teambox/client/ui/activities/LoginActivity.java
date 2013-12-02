@@ -67,6 +67,10 @@ public class LoginActivity extends FragmentActivity {
 						result.token);
 
 				loadSessionScreen();
+				finish();
+				overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);
+
 			} else {
 				Application.deleteCookies(getApplicationContext());
 			}
@@ -99,8 +103,6 @@ public class LoginActivity extends FragmentActivity {
 		if (isUserLogged()) {
 			loadSessionScreen();
 			finish();
-			overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);
 		}
 
 		setContentView(R.layout.activity_login);

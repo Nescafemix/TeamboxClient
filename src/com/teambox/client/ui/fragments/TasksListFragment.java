@@ -7,13 +7,19 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.OnNavigationListener;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import com.teambox.client.Application;
 import com.teambox.client.R;
+import com.teambox.client.Utilities;
 import com.teambox.client.adapters.DropDrownProjectsListAdapter;
 import com.teambox.client.adapters.TaskListAdapter;
 import com.teambox.client.db.ProjectTable;
@@ -82,7 +88,8 @@ public class TasksListFragment extends BaseListFragment {
 			taskStatusToFilter = (taskStatusToFilter == -1 ? null
 					: taskStatusToFilter);
 
-			refreshInfoToShow(mInfoToLoad, projectIdToFilter, taskStatusToFilter);
+			refreshInfoToShow(mInfoToLoad, projectIdToFilter,
+					taskStatusToFilter);
 
 			return null;
 		}
@@ -197,8 +204,11 @@ public class TasksListFragment extends BaseListFragment {
 		mLoadDataInDropDownOfActionBarAsyncTask = new LoadDataInDropDownOfActionBarAsyncTask();
 		mLoadDataInDropDownOfActionBarAsyncTask.execute();
 
+		// This screen has an element specific at the menu.
+		setHasOptionsMenu(true);
+
 	}
-	
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
@@ -219,12 +229,12 @@ public class TasksListFragment extends BaseListFragment {
 	@Override
 	public void onStop() {
 
-		if(mLoadDataInDropDownOfActionBarAsyncTask != null)
+		if (mLoadDataInDropDownOfActionBarAsyncTask != null)
 			mLoadDataInDropDownOfActionBarAsyncTask.cancel(true);
-		
-		if(mLoadDataInListViewAsyncTask != null)
+
+		if (mLoadDataInListViewAsyncTask != null)
 			mLoadDataInListViewAsyncTask.cancel(true);
-		
+
 		super.onStop();
 	}
 
@@ -247,7 +257,8 @@ public class TasksListFragment extends BaseListFragment {
 					String key) {
 				if (key.equalsIgnoreCase(Application.FILTER_TASK_STATUS_KEY)) {
 					mLoadDataInListViewAsyncTask = new LoadDataInListViewAsyncTask();
-					mLoadDataInListViewAsyncTask.execute(mProjectIdToFilter, Application
+					mLoadDataInListViewAsyncTask
+							.execute(mProjectIdToFilter, Application
 									.getTaskStatusFilterValue(getActivity()));
 				}
 			}
@@ -255,6 +266,41 @@ public class TasksListFragment extends BaseListFragment {
 		};
 		mSharedPreferences
 				.registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+
+		if (!Utilities.isDeviceATablet(getActivity())) {
+			menu.findItem(R.id.action_filter_tasks_by_status).setVisible(
+					Boolean.TRUE);
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action buttons
+		switch (item.getItemId()) {
+		case R.id.action_filter_tasks_by_status:
+			openFilterScreen();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void openFilterScreen() {
+		// We must pass ProjectIdToFilter to can reload a fragment like the
+		// current fragment
+		Fragment fragment = new FilterFragment();
+		FragmentManager fragmentManager = getActivity()
+				.getSupportFragmentManager();
+		Bundle bundle = new Bundle();
+		bundle.putLong(ARG_PROJECT_FILTER, mProjectIdToFilter);
+		fragment.setArguments(bundle);
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, fragment).commit();
 	}
 
 	private void setupActionBar() {
@@ -282,7 +328,8 @@ public class TasksListFragment extends BaseListFragment {
 					mProjectIdToFilter = mInfoToLoadAtDropDownListOfActionBar
 							.get(position).projectId;
 					mLoadDataInListViewAsyncTask = new LoadDataInListViewAsyncTask();
-					mLoadDataInListViewAsyncTask.execute(mProjectIdToFilter, Application
+					mLoadDataInListViewAsyncTask
+							.execute(mProjectIdToFilter, Application
 									.getTaskStatusFilterValue(getActivity()));
 				}
 				return true;

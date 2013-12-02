@@ -116,6 +116,7 @@ public class ProjectsListFragment extends BaseListFragment {
 				.getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
 	}
 
 }
