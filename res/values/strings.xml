@@ -55,7 +55,7 @@
     <string name="fragment_profile_summary_logout">Log out</string>
     <string name="fragment_profile_detail_title">Profile detail:</string>
     <string name="fragment_tasks_filter_by_priority_title">Tasks filter by priority:</string>
-    <string name="fragment_task_list_no_elements">No stasks</string>
+    <string name="fragment_task_list_no_elements">No tasks</string>
     <string name="fragment_projects_list_no_elements">No projects</string>
     <string name="fragment_projects_summary_title">Summary:</string>    
     
