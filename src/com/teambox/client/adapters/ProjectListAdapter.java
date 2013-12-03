@@ -22,16 +22,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.teambox.client.Application;
 import com.teambox.client.R;
 import com.teambox.client.db.ProjectTable;
-import com.teambox.client.ui.activities.MainActivity;
 
 /**
  * ListAdapter used to adapter a list of projects in a listView
@@ -75,16 +71,10 @@ public class ProjectListAdapter extends BaseAdapter {
 
 			holder = new TaskHolder();
 			holder.name = (TextView) row.findViewById(R.id.textViewProjectName);
-			holder.tasksCountNew = (Button) row
-					.findViewById(R.id.buttonTasksCountNew);
-			holder.tasksCountOpen = (Button) row
-					.findViewById(R.id.buttonTasksCountOpen);
-			holder.tasksCountHold = (Button) row
-					.findViewById(R.id.buttonTasksCountHold);
-			holder.tasksCountResolved = (Button) row
-					.findViewById(R.id.buttonTasksCountResolved);
-			holder.tasksCountRejected = (Button) row
-					.findViewById(R.id.buttonTasksCountRejected);
+			holder.tasksCountNormal = (TextView) row
+					.findViewById(R.id.TextViewTasksCounterNormal);
+			holder.tasksCountUrgent = (TextView) row
+					.findViewById(R.id.TextViewTasksCounterUrgent);
 
 			row.setTag(holder);
 		} else {
@@ -93,61 +83,34 @@ public class ProjectListAdapter extends BaseAdapter {
 
 		setValuesInViews(holder, project);
 
-		registerListeners(holder, project);
-
 		return row;
-	}
-
-	private void registerListeners(TaskHolder holder, ProjectTable project) {
-		holder.tasksCountNew.setOnClickListener(getOnClickListener(project, 2));
-		holder.tasksCountOpen
-				.setOnClickListener(getOnClickListener(project, 3));
-		holder.tasksCountHold
-				.setOnClickListener(getOnClickListener(project, 4));
-		holder.tasksCountResolved.setOnClickListener(getOnClickListener(
-				project, 5));
-		holder.tasksCountRejected.setOnClickListener(getOnClickListener(
-				project, 6));
 	}
 
 	private void setValuesInViews(TaskHolder holder, ProjectTable project) {
 		holder.name.setText(project.name);
-		holder.tasksCountNew.setText(String.valueOf(project.tasksCountNew));
-		holder.tasksCountOpen.setText(String.valueOf(project.tasksCountOpen));
-		holder.tasksCountHold.setText(String.valueOf(project.tasksCountHold));
-		holder.tasksCountResolved.setText(String
-				.valueOf(project.tasksCountResolved));
-		holder.tasksCountRejected.setText(String
-				.valueOf(project.tasksCountRejected));
-	}
 
-	private OnClickListener getOnClickListener(final ProjectTable project,
-			final int taskStatusSelectedPositionInArray) {
-		return new OnClickListener() {
+		holder.tasksCountNormal.setText(String
+				.valueOf(project.tasksCountNormal));
+		if (project.tasksCountNormal > 0) {
+			holder.tasksCountNormal.setVisibility(View.VISIBLE);
+		} else {
+			holder.tasksCountNormal.setVisibility(View.GONE);
+		}
 
-			@Override
-			public void onClick(View v) {
-
-				Application.setTaskStatusFilterSelection(mContext,
-						taskStatusSelectedPositionInArray);
-
-				((MainActivity) mContext).loadNewFragments(
-						Application.FRAGMENT_TASKS, project.projectId);
-
-				((MainActivity) mContext)
-						.updateSelectedItemInDrawer(Application.FRAGMENT_TASKS);
-
-			}
-		};
+		holder.tasksCountUrgent.setText(String
+				.valueOf(project.tasksCountUrgent));
+		if (project.tasksCountUrgent > 0) {
+			holder.tasksCountUrgent.setVisibility(View.VISIBLE);
+			holder.tasksCountUrgent.setText(String
+					.valueOf(project.tasksCountUrgent));
+		} else {
+			holder.tasksCountUrgent.setVisibility(View.GONE);
+		}
 	}
 
 	static class TaskHolder {
 		TextView name;
-		Button tasksCountNew;
-		Button tasksCountOpen;
-		Button tasksCountHold;
-		Button tasksCountResolved;
-		Button tasksCountRejected;
-
+		TextView tasksCountNormal;
+		TextView tasksCountUrgent;
 	}
 }

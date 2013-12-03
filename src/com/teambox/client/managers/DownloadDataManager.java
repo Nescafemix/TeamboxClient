@@ -19,13 +19,12 @@ package com.teambox.client.managers;
 import java.util.List;
 
 import retrofit.RestAdapter;
-
 import android.content.Context;
 import android.util.Log;
 
 import com.teambox.client.api.Account;
-import com.teambox.client.api.Project;
 import com.teambox.client.api.Configuration;
+import com.teambox.client.api.Project;
 import com.teambox.client.api.Task;
 import com.teambox.client.api.TeamBoxInterface;
 import com.teambox.client.db.AccountTable;
@@ -124,12 +123,12 @@ public class DownloadDataManager {
 	}
 
 	/**
-	 * Update the Tasks info stored in a local Database with data downloaded
-	 * from Teambox
+	 * Update my assigned Tasks info stored in a local Database with data
+	 * downloaded from Teambox
 	 */
-	public void updateTasks() {
+	public void updateMyAssignedTasks() {
 		// Fetch a list of the tasks of this user.
-		List<Task> tasks = mTeambox.tasks(mToken, "all", "0");
+		List<Task> tasks = mTeambox.myAssignedTasks(mToken, "1", "0");
 
 		// Update data in Database
 		TaskTable.deleteAll(TaskTable.class);

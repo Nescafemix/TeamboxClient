@@ -15,22 +15,16 @@
     	Fragments
     -->
     
-    <string-array name="task_status_names_array">
+    <string-array name="task_priority_names_array">
         <item>All</item>
-        <item>New</item>
-        <item>Open</item>
-        <item>Hold</item>
-        <item>Resolved</item>
-        <item>Rejected</item>
+        <item>Normal</item>
+        <item>Urgent</item>
     </string-array>
 
-    <string-array name="task_status_values_array">
+    <string-array name="task_priority_values_array">
         <item>-1</item>
         <item>0</item>
         <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    	<item>4</item>
 	</string-array>
     
     

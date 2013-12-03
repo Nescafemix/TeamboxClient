@@ -39,9 +39,9 @@ public class FilterFragment extends BaseFragment {
 			}
 		}
 
-		// Set radioGroup with value stores in SharedPreferences
+		// Set radioGroup with value stored in SharedPreferences
 		int positionInRadioGroup = Application
-				.getTaskStatusFilterSelection(getActivity()) - 1;
+				.getTaskPriorityFilterSelection(getActivity()) - 1;
 		mRadioGroupFilter.check(mRadioGroupFilter.getChildAt(
 				positionInRadioGroup).getId());
 
@@ -68,12 +68,12 @@ public class FilterFragment extends BaseFragment {
 		mRadioGroupFilter = (RadioGroup) view
 				.findViewById(R.id.radioGroupFilter);
 
-		String[] taskStatusNames = getResources().getStringArray(
-				R.array.task_status_names_array);
+		String[] taskPriorityNames = getResources().getStringArray(
+				R.array.task_priority_names_array);
 
-		for (int i = 0; i < taskStatusNames.length; i++) {
+		for (int i = 0; i < taskPriorityNames.length; i++) {
 			RadioButton radioButton = new RadioButton(getActivity());
-			radioButton.setText(taskStatusNames[i]);
+			radioButton.setText(taskPriorityNames[i]);
 			mRadioGroupFilter.addView(radioButton);
 		}
 
@@ -107,8 +107,8 @@ public class FilterFragment extends BaseFragment {
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						int positionInRadioGroup = group.indexOfChild(group
 								.findViewById(checkedId));
-						Application.setTaskStatusFilterSelection(getActivity(),
-								positionInRadioGroup + 1);
+						Application.setTaskPriorityFilterSelection(
+								getActivity(), positionInRadioGroup + 1);
 
 						// If it is a mobile, this fragment is charged at full
 						// screen. Return to the previous screen

@@ -74,7 +74,7 @@ public class UpdateDataIntentService extends IntentService {
 		}
 
 		try {
-			updateManager.updateTasks();
+			updateManager.updateMyAssignedTasks();
 		} catch (Exception e) {
 			success = Boolean.FALSE;
 			publishErrorAlert(getString(R.string.service_update_data_error_tasks));

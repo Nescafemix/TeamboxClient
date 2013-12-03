@@ -63,9 +63,10 @@ public class MainActivity extends ActionBarActivity {
 			selectDrawerItem(position);
 		}
 	}
-	private static final String ARG_SECTION_NUMBER = "section_number";
 
+	private static final String ARG_SECTION_NUMBER = "section_number";
 	private static final String ARG_PROJECT_FILTER = "project_filter_id";
+
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 
@@ -232,9 +233,9 @@ public class MainActivity extends ActionBarActivity {
 
 		if (savedInstanceState == null) {
 			mIsRequiredAnUpdate = Boolean.TRUE;
-			
+
 			selectDrawerItem(0);
-		}else{
+		} else {
 			mIsRequiredAnUpdate = Boolean.FALSE;
 		}
 
@@ -305,9 +306,9 @@ public class MainActivity extends ActionBarActivity {
 		case R.id.action_refresh:
 			launchUpdateProcess();
 			return true;
-//		case R.id.action_filter_tasks_by_status:
-//			openFilterScreen();
-//			return true;
+			// case R.id.action_filter_tasks_by_status:
+			// openFilterScreen();
+			// return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -357,7 +358,6 @@ public class MainActivity extends ActionBarActivity {
 
 	}
 
-
 	private void refreshDataInFragments() {
 		if (Utilities.isDeviceATablet(this)) {
 			((Updatable) getSupportFragmentManager().findFragmentById(
@@ -373,11 +373,11 @@ public class MainActivity extends ActionBarActivity {
 	private void selectDrawerItem(int position) {
 
 		long projectIdFilter = 0; // No project filter is used
-		
+
 		loadNewFragments(position, projectIdFilter);
 
 		updateSelectedItemInDrawer(position);
-		
+
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 

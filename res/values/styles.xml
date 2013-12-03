@@ -117,10 +117,17 @@
 	    <item name="android:textStyle">normal</item>
     </style>
 	
+	<style name="Text_fragment_task_list_label" parent="@android:style/TextAppearance.Medium">
+	    <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+	    <item name="android:background">@drawable/background_task_list_item_label</item>
+	    <item name="android:textSize">13sp</item>
+	    <item name="android:textStyle">normal</item>    
+    </style>
+    
 	<style name="Text_fragment_task_list_comments_count_title" parent="@style/Text_fragment_task_list_comments_count">
 		<item name="android:layout_marginLeft">5dp</item>
 	</style>
-	
+		
 	<style name="Text_fragment_project_list_status_title" parent="@android:style/TextAppearance.Small">
 	    <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
 	    <item name="android:textColor">@color/text_fragment_task_list_primary</item>
@@ -136,6 +143,21 @@
 	    <item name="android:textStyle">normal</item>
     </style>
 
+	<style name="Text_fragment_project_list_task_normal_counter" parent="@android:style/TextAppearance.Medium">
+	    <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+	    <item name="android:textColor">@color/text_fragment_task_list_primary</item>
+	    <item name="android:textSize">16sp</item>
+	    <item name="android:textStyle">normal</item>
+    </style>
+	
+	<style name="Text_fragment_project_list_task_urgent_counter" parent="@android:style/TextAppearance.Medium">
+	    <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+	    <item name="android:textColor">@color/text_fragment_task_list_primary</item>
+	    <item name="android:textSize">16sp</item>
+	    <item name="android:textStyle">normal</item>
+    </style>
+	
+	
 	<style name="Text_fragment_lateral_title" parent="@android:style/TextAppearance.Medium">
 	    <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
 	    <item name="android:textColor">@color/text_fragment_lateral_title</item>
@@ -164,14 +186,5 @@
 	
 	<style name="Button_logout" parent="@style/Button.Base">
 	</style>
-
-	<style name="Button_tasks_counter_new" parent="@android:style/Widget.Holo.Light.Button.Small">
-	    <item name="android:textSize">16sp</item>
-	</style>
-
-	<style name="Button_tasks_counter_other" parent="@android:style/Widget.Holo.Light.Button.Small">
-	    <item name="android:textSize">14sp</item>
-	</style>
-			
     
 </resources>

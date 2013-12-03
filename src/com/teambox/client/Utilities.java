@@ -62,9 +62,9 @@ public class Utilities {
 	}
 
 	/**
-	 * Check if the device is a Tablet.
-	 * If the framelayout "lateral_frame" exists in the loaded layout, user is
-	 * using a Tablet (o maybe a padphone as device XD)
+	 * Check if the device is a Tablet. If the framelayout "lateral_frame"
+	 * exists in the loaded layout, user is using a Tablet (o maybe a padphone
+	 * as device XD)
 	 * 
 	 * @param activity
 	 * @return boolean true if is a Tablet, otherwise false

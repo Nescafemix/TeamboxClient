@@ -11,7 +11,7 @@
         style="@style/Text_fragment_lateral_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_tasks_filter_by_status_title" />
+        android:text="@string/fragment_tasks_filter_by_priority_title" />
 
     <RadioGroup
         android:id="@+id/radioGroupFilter"

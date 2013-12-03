@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.ListView;
 
+import com.teambox.client.Application;
 import com.teambox.client.R;
 import com.teambox.client.adapters.ProjectListAdapter;
 import com.teambox.client.db.ProjectTable;
@@ -23,54 +24,43 @@ import com.teambox.client.ui.activities.MainActivity;
  */
 public class ProjectsListFragment extends BaseListFragment {
 	private class LoadDataInListViewAsyncTask extends
-			AsyncTask<Void, Void, Void> {
+			AsyncTask<Void, List<ProjectTable>, List<ProjectTable>> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected List<ProjectTable> doInBackground(Void... params) {
 
-			refreshInfoToShow(mInfoToLoad);
-
-			return null;
+			return getNewDataToShow();
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(List<ProjectTable> projects) {
 
-			notifyDataSetChangedToAdapter();
+			mInfoToLoad.clear();
+			mInfoToLoad.addAll(projects);
+
+			mProjectAdapter.notifyDataSetChanged();
 		}
 
-		private void refreshInfoToShow(List<ProjectTable> projectList) {
+		private List<ProjectTable> getNewDataToShow() {
 			List<ProjectTable> projects = ProjectTable
 					.listAll(ProjectTable.class);
 
-			projectList.clear();
 			for (int i = 0; i < projects.size(); i++) {
-				ProjectTable project = projects.get(i);
-				project.tasksCountNew = TaskTable
-						.find(TaskTable.class,
-								"project_id = " + project.projectId
-										+ " AND status = 0").size();
-				project.tasksCountOpen = TaskTable
-						.find(TaskTable.class,
-								"project_id = " + project.projectId
-										+ " AND status = 1").size();
-				project.tasksCountHold = TaskTable
-						.find(TaskTable.class,
-								"project_id = " + project.projectId
-										+ " AND status = 2").size();
-				project.tasksCountResolved = TaskTable
-						.find(TaskTable.class,
-								"project_id = " + project.projectId
-										+ " AND status = 3").size();
-				project.tasksCountRejected = TaskTable
-						.find(TaskTable.class,
-								"project_id = " + project.projectId
-										+ " AND status = 4").size();
-				projectList.add(projects.get(i));
 
+				ProjectTable project = projects.get(i);
+
+				project.tasksCountNormal = TaskTable.find(
+						TaskTable.class,
+						"project_id = " + project.projectId
+								+ " AND status = 1 AND urgent ='false'").size();
+				project.tasksCountUrgent = TaskTable.find(
+						TaskTable.class,
+						"project_id = " + project.projectId
+								+ " AND status = 1 AND urgent ='true'").size();
 				if (isCancelled())
 					break;
 			}
+			return projects;
 		}
 	}
 
@@ -85,6 +75,8 @@ public class ProjectsListFragment extends BaseListFragment {
 				R.layout.list_item_project, mInfoToLoad);
 		setListAdapter(mProjectAdapter);
 
+		setEmptyText(getString(R.string.fragment_projects_list_no_elements));
+
 		setupActionBar();
 
 		refreshDataInViews();
@@ -94,6 +86,14 @@ public class ProjectsListFragment extends BaseListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
+
+		((MainActivity) getActivity())
+				.loadNewFragments(Application.FRAGMENT_TASKS,
+						mInfoToLoad.get(position).projectId);
+
+		((MainActivity) getActivity())
+				.updateSelectedItemInDrawer(Application.FRAGMENT_TASKS);
+
 	}
 
 	@Override

@@ -6,8 +6,17 @@
     -->
     
     <color name="pressed_actionbar">#3da8d1</color>
+
     
-        
+    <!-- 
+    	Borders
+    -->
+    
+    <color name="border_task_normal_counter">#bbb</color>
+    <color name="border_task_urgent_counter">#c28d1c</color>
+    <color name="border_task_list_item_label">#c28d1c</color>
+    
+    
     <!-- 
     	Backgrounds
     -->
@@ -18,8 +27,11 @@
     <color name="background_flyout_menu_item_activated">#3da8d1</color>
     <color name="background_task_list_item">#fff</color>
     <color name="background_task_list_item_activated">#3da8d1</color>
+    <color name="background_task_list_item_label">#ffaa79</color>    
     <color name="background_lateral_fragment">#fff</color>
     <color name="background_content_fragment">#fff</color>
+    <color name="background_task_normal_counter">#ddd</color>
+    <color name="background_task_urgent_counter">#ffaa79</color>
     
     
     <!-- 

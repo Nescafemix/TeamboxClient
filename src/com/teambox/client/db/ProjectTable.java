@@ -42,23 +42,12 @@ public class ProjectTable extends SugarRecord<ProjectTable> {
 	public boolean publishPages;
 
 	@Ignore
-	public int tasksCountNew; // It won't be persisted, neither will a
-								// corresponding column be created for this
-								// property
-	@Ignore
-	public int tasksCountOpen; // It won't be persisted, neither will a
-								// corresponding column be created for this
-								// property
-	@Ignore
-	public int tasksCountHold; // It won't be persisted, neither will a
-								// corresponding column be created for this
-								// property
-	@Ignore
-	public int tasksCountResolved; // It won't be persisted, neither will a
+	public int tasksCountNormal; // It won't be persisted, neither will a
 									// corresponding column be created for this
 									// property
+
 	@Ignore
-	public int tasksCountRejected; // It won't be persisted, neither will a
+	public int tasksCountUrgent; // It won't be persisted, neither will a
 									// corresponding column be created for this
 									// property
 

@@ -34,18 +34,20 @@ import com.teambox.client.ui.activities.MainActivity;
  */
 public class TasksListFragment extends BaseListFragment {
 	private class LoadDataInDropDownOfActionBarAsyncTask extends
-			AsyncTask<Void, Void, Void> {
+			AsyncTask<Void, List<ProjectTable>, List<ProjectTable>> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected List<ProjectTable> doInBackground(Void... params) {
 
-			refreshInfoAtDropDownListOfActionBar(mInfoToLoadAtDropDownListOfActionBar);
+			return getNewDataToPopulateTheDropDownListOfActionBar();
 
-			return null;
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(List<ProjectTable> projects) {
+
+			mInfoToLoadAtDropDownListOfActionBar.clear();
+			mInfoToLoadAtDropDownListOfActionBar.addAll(projects);
 
 			((MainActivity) getActivity()).getSupportActionBar()
 					.setSelectedNavigationItem(
@@ -55,47 +57,39 @@ public class TasksListFragment extends BaseListFragment {
 
 		}
 
-		private void refreshInfoAtDropDownListOfActionBar(
-				List<ProjectTable> projectList) {
+		private List<ProjectTable> getNewDataToPopulateTheDropDownListOfActionBar() {
 			List<ProjectTable> projects = ProjectTable
 					.listAll(ProjectTable.class);
 
-			projectList.clear();
-			for (int i = 0; i < projects.size(); i++) {
-				projectList.add(projects.get(i));
-
-				if (isCancelled())
-					break;
-			}
-
-			projectList.add(0, new ProjectTable(getActivity(), 0,
+			projects.add(0, new ProjectTable(getActivity(), 0,
 					getString(R.string.dropdown_list_all_projects_element)));
+
+			return projects;
 		}
 	}
 
 	private class LoadDataInListViewAsyncTask extends
-			AsyncTask<Long, Void, Void> {
+			AsyncTask<Long, List<TaskTable>, List<TaskTable>> {
 
 		@Override
-		protected Void doInBackground(Long... params) {
+		protected List<TaskTable> doInBackground(Long... params) {
 			Long projectIdToFilter = params[0]; // With projectIdToFilter==0 no
 												// filter by project is needed
-			Long taskStatusToFilter = params[1]; // With taskStatusToFilter==-1
-													// no filter by task status
+			Long taskPriorityToFilter = params[1]; // With
+													// taskStatusToFilter==-1
+													// no filter by task
+													// priority
 													// is needed
 			projectIdToFilter = (projectIdToFilter == 0 ? null
 					: projectIdToFilter);
-			taskStatusToFilter = (taskStatusToFilter == -1 ? null
-					: taskStatusToFilter);
+			taskPriorityToFilter = (taskPriorityToFilter == -1 ? null
+					: taskPriorityToFilter);
 
-			refreshInfoToShow(mInfoToLoad, projectIdToFilter,
-					taskStatusToFilter);
-
-			return null;
+			return getNewDataToShow(projectIdToFilter, taskPriorityToFilter);
 		}
 
-		private List<TaskTable> getFilteredTasks(Long projectIdToFilter,
-				Long taskStatusToFilter) {
+		private List<TaskTable> getNewDataToShow(Long projectIdToFilter,
+				Long taskPriorityToFilter) {
 			String filterWhereSQL = "";
 
 			if (projectIdToFilter != null) {
@@ -103,9 +97,11 @@ public class TasksListFragment extends BaseListFragment {
 						+ projectIdToFilter.longValue() + " AND ";
 			}
 
-			if (taskStatusToFilter != null) {
-				filterWhereSQL = filterWhereSQL + "status = "
-						+ taskStatusToFilter.longValue() + " AND ";
+			if (taskPriorityToFilter != null) {
+				filterWhereSQL = filterWhereSQL
+						+ "urgent = "
+						+ (taskPriorityToFilter.compareTo((long) 0) == 0 ? "'false'"
+								: "'true'") + " AND ";
 			}
 
 			List<TaskTable> tasks;
@@ -113,39 +109,25 @@ public class TasksListFragment extends BaseListFragment {
 				filterWhereSQL = filterWhereSQL.substring(0,
 						filterWhereSQL.length() - 5);
 				tasks = TaskTable.find(TaskTable.class, filterWhereSQL);
+				tasks = TaskTable.find(TaskTable.class, filterWhereSQL, null,
+						null, "urgent DESC", null);
 
 			} else {
-				tasks = TaskTable.listAll(TaskTable.class);
+				tasks = TaskTable.find(TaskTable.class, null, null, null,
+						"urgent DESC", null);
 			}
 
 			return tasks;
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(List<TaskTable> tasks) {
 
-			notifyDataSetChangedToAdapter();
+			mInfoToLoad.clear();
+			mInfoToLoad.addAll(tasks);
 
-		}
+			mTaskAdapter.notifyDataSetChanged();
 
-		private void refreshInfoToShow(List<TaskTable> taskList,
-				Long projectIdToFilter, Long taskStatusToFilter) {
-
-			List<TaskTable> tasks = getFilteredTasks(projectIdToFilter,
-					taskStatusToFilter);
-
-			updateSourceData(taskList, tasks);
-		}
-
-		private void updateSourceData(List<TaskTable> taskList,
-				List<TaskTable> tasks) {
-			taskList.clear();
-			for (int i = 0; i < tasks.size(); i++) {
-				taskList.add(tasks.get(i));
-
-				if (isCancelled())
-					break;
-			}
 		}
 
 	}
@@ -199,6 +181,8 @@ public class TasksListFragment extends BaseListFragment {
 				R.layout.list_item_task, mInfoToLoad);
 		setListAdapter(mTaskAdapter);
 
+		setEmptyText(getString(R.string.fragment_task_list_no_elements));
+
 		setupActionBar();
 
 		mLoadDataInDropDownOfActionBarAsyncTask = new LoadDataInDropDownOfActionBarAsyncTask();
@@ -243,7 +227,7 @@ public class TasksListFragment extends BaseListFragment {
 
 		mLoadDataInListViewAsyncTask = new LoadDataInListViewAsyncTask();
 		mLoadDataInListViewAsyncTask.execute(mProjectIdToFilter,
-				Application.getTaskStatusFilterValue(getActivity()));
+				Application.getTaskPriorityFilterValue(getActivity()));
 
 		mLoadDataInDropDownOfActionBarAsyncTask = new LoadDataInDropDownOfActionBarAsyncTask();
 		mLoadDataInDropDownOfActionBarAsyncTask.execute();
@@ -257,9 +241,9 @@ public class TasksListFragment extends BaseListFragment {
 					String key) {
 				if (key.equalsIgnoreCase(Application.FILTER_TASK_STATUS_KEY)) {
 					mLoadDataInListViewAsyncTask = new LoadDataInListViewAsyncTask();
-					mLoadDataInListViewAsyncTask
-							.execute(mProjectIdToFilter, Application
-									.getTaskStatusFilterValue(getActivity()));
+					mLoadDataInListViewAsyncTask.execute(mProjectIdToFilter,
+							Application
+									.getTaskPriorityFilterValue(getActivity()));
 				}
 			}
 
@@ -328,9 +312,9 @@ public class TasksListFragment extends BaseListFragment {
 					mProjectIdToFilter = mInfoToLoadAtDropDownListOfActionBar
 							.get(position).projectId;
 					mLoadDataInListViewAsyncTask = new LoadDataInListViewAsyncTask();
-					mLoadDataInListViewAsyncTask
-							.execute(mProjectIdToFilter, Application
-									.getTaskStatusFilterValue(getActivity()));
+					mLoadDataInListViewAsyncTask.execute(mProjectIdToFilter,
+							Application
+									.getTaskPriorityFilterValue(getActivity()));
 				}
 				return true;
 			}

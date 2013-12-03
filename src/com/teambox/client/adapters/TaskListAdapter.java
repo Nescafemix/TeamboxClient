@@ -37,8 +37,15 @@ import com.teambox.client.db.TaskTable;
  */
 public class TaskListAdapter extends BaseAdapter {
 
+	static class TaskHolder {
+		TextView name;
+		TextView commentsCountTitle;
+		TextView label;
+	}
+
 	private List<TaskTable> mTasks;
 	private int mLayoutResourceId;
+
 	private Context mContext;
 
 	public TaskListAdapter(Context context, int layoutResourceId,
@@ -71,10 +78,9 @@ public class TaskListAdapter extends BaseAdapter {
 
 			holder = new TaskHolder();
 			holder.name = (TextView) row.findViewById(R.id.textViewTaskName);
-			holder.commentsCount = (TextView) row
-					.findViewById(R.id.textViewTaskCommentsCount);
 			holder.commentsCountTitle = (TextView) row
 					.findViewById(R.id.textViewTaskCommentsCountTitle);
+			holder.label = (TextView) row.findViewById(R.id.textViewTaskLabel);
 
 			row.setTag(holder);
 		} else {
@@ -87,18 +93,20 @@ public class TaskListAdapter extends BaseAdapter {
 	}
 
 	private void setValuesInViews(TaskHolder holder, TaskTable task) {
-		holder.name.setText(task.name);
-		holder.commentsCount.setText(String.valueOf(task.commentsCount));
-		holder.commentsCountTitle
-				.setText((task.commentsCount > 1 ? mContext
-						.getString(R.string.fragment_task_list_textview_task_list_comments_count_title_plural)
-						: mContext
-								.getString(R.string.fragment_task_list_textview_task_list_comments_count_title_singular)));
-	}
+		if (task.urgent) {
+			holder.label.setText("Urgent");
+			holder.label.setVisibility(View.VISIBLE);
+		} else {
+			holder.label.setVisibility(View.INVISIBLE);
+		}
 
-	static class TaskHolder {
-		TextView name;
-		TextView commentsCount;
-		TextView commentsCountTitle;
+		holder.name.setText(task.name);
+
+		holder.commentsCountTitle
+				.setText(mContext
+						.getResources()
+						.getQuantityString(
+								R.plurals.fragment_task_list_textview_task_list_comments_count_title,
+								task.commentsCount, task.commentsCount));
 	}
 }

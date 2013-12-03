@@ -121,7 +121,7 @@ public class Application extends android.app.Application {
 	 * @return int position of selected value in the status array (first
 	 *         element: 1)
 	 */
-	public static int getTaskStatusFilterSelection(Context context) {
+	public static int getTaskPriorityFilterSelection(Context context) {
 		SharedPreferences preferences = context.getSharedPreferences(
 				APP_STORE_PREF_FILE, MODE_PRIVATE);
 
@@ -130,19 +130,20 @@ public class Application extends android.app.Application {
 	}
 
 	/**
-	 * Get task status filter value needed for api requests.
+	 * Get task priority filter value needed for api requests.
 	 * 
 	 * @param context
 	 * @return
 	 */
-	public static long getTaskStatusFilterValue(Context context) {
+	public static long getTaskPriorityFilterValue(Context context) {
 		SharedPreferences preferences = context.getSharedPreferences(
 				APP_STORE_PREF_FILE, MODE_PRIVATE);
 		int positionStored = preferences.getInt(FILTER_TASK_STATUS_KEY, 1);
 
-		return Long.valueOf(
-				context.getResources().getStringArray(
-						R.array.task_status_values_array)[positionStored - 1])
+		return Long
+				.valueOf(
+						context.getResources().getStringArray(
+								R.array.task_priority_values_array)[positionStored - 1])
 				.longValue();
 
 	}
@@ -205,7 +206,7 @@ public class Application extends android.app.Application {
 	 *            position of selected value in the status array (first
 	 *            element:1)
 	 */
-	public static void setTaskStatusFilterSelection(Context context, int value) {
+	public static void setTaskPriorityFilterSelection(Context context, int value) {
 		SharedPreferences preferences = context.getSharedPreferences(
 				APP_STORE_PREF_FILE, MODE_PRIVATE);
 		SharedPreferences.Editor editor = preferences.edit();

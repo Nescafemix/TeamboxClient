@@ -67,4 +67,38 @@ public interface TeamBoxInterface {
 	List<Task> tasks(@Query("access_token") String token,
 			@Query("scope") String scope, @Query("count") String count);
 
+	/**
+	 * Download and parse my assigned tasks info in a list of Task objects
+	 * 
+	 * @param token
+	 *            OAuth access token
+	 * @param mine
+	 *            Used to filter my tasks.
+	 * @param count
+	 *            Number of tasks to retrieve. 0 means all matched.
+	 * @return
+	 */
+	@GET("/tasks")
+	List<Task> myAssignedTasks(@Query("access_token") String token,
+			@Query("mine") String mine, @Query("count") String count);
+
+	/**
+	 * Download and parse the unassigned tasks info in a list of Task objects
+	 * 
+	 * @param token
+	 *            OAuth access token
+	 * @param unassigned
+	 *            Used to filter unassigned tasks. It can be 1(true) or
+	 *            0(false).
+	 * @param project_id
+	 *            Used to filter tasks by project.
+	 * @param count
+	 *            Number of tasks to retrieve. 0 means all matched.
+	 * @return
+	 */
+	@GET("/tasks")
+	List<Task> unassignedTasks(@Query("access_token") String token,
+			@Query("unassigned") String unassigned,
+			@Query("project_id") String project_id, @Query("count") String count);
+
 }

@@ -21,7 +21,7 @@
     -->
     
     <string name="action_refresh">Update</string>
-    <string name="action_filter_tasks_by_status">Filter tasks by status</string>
+    <string name="action_filter_tasks_by_status">Filter tasks by priority</string>
     <string name="dropdown_list_all_projects_element">All projects</string>
 
     
@@ -48,11 +48,15 @@
 		Fragments
 	-->
     
-    <string name="fragment_task_list_textview_task_list_comments_count_title_singular">comment</string>
-    <string name="fragment_task_list_textview_task_list_comments_count_title_plural">comments</string>
+    <plurals name="fragment_task_list_textview_task_list_comments_count_title">
+    	<item quantity="one">1 comment</item>
+    	<item quantity="other">%d comments</item>
+	</plurals>
     <string name="fragment_profile_summary_logout">Log out</string>
     <string name="fragment_profile_detail_title">Profile detail:</string>
-    <string name="fragment_tasks_filter_by_status_title">Tasks filter by status:</string>
+    <string name="fragment_tasks_filter_by_priority_title">Tasks filter by priority:</string>
+    <string name="fragment_task_list_no_elements">No stasks</string>
+    <string name="fragment_projects_list_no_elements">No projects</string>
     <string name="fragment_projects_summary_title">Summary:</string>    
     
 </resources>
